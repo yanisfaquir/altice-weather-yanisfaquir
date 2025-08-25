@@ -32,9 +32,9 @@ export class WeatherFormComponent {
   }
 
   // Getter para usar no template (sem signal call)
-  get currentMessage() {
-    return this.message();
-  }
+  // get currentMessage() {
+  //   return this.message();
+  // }
 
   private createForm(): FormGroup {
     const today = new Date().toISOString().split('T')[0];

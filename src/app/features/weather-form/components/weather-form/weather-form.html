@@ -28,10 +28,11 @@
                placeholder-gray-500 dark:placeholder-gray-400
                transition-all duration-200"
       >
-      <div *ngIf="weatherForm.get('city')?.invalid && weatherForm.get('city')?.touched" 
-           class="text-red-500 text-sm">
-        City is required
-      </div>
+      @if (weatherForm.get('city')?.invalid && weatherForm.get('city')?.touched) {
+        <div class="text-red-500 text-sm">
+          City is required
+        </div>
+}
     </div>
 
     <!-- Temperature -->
@@ -221,14 +222,15 @@
     </div>
 
     <!-- Success/Error Messages -->
-    <div *ngIf="currentMessage" 
-         class="p-4 rounded-lg mt-4"
-         [class.bg-green-100]="currentMessage.type === 'success'"
-         [class.text-green-700]="currentMessage.type === 'success'"
-         [class.bg-red-100]="currentMessage.type === 'error'"
-         [class.text-red-700]="currentMessage.type === 'error'">
-      {{ currentMessage.text }}
-    </div>
+    @if (message()) {
+      <div class="p-4 rounded-lg mt-4"
+           [class.bg-green-100]="message()?.type === 'success'"
+           [class.text-green-700]="message()?.type === 'success'"
+           [class.bg-red-100]="message()?.type === 'error'"
+           [class.text-red-700]="message()?.type === 'error'">
+        {{ message()?.text }}
+      </div>
+    }
 
   </form>
 </div>
