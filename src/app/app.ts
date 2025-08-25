@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from './core/services/api.service';
 import { API_ENDPOINTS } from './core/constants/api.constants';
+import { WeatherFormComponent } from '../app/features/weather-form/components/weather-form/weather-form';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, WeatherFormComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
@@ -15,6 +16,9 @@ export class App implements OnInit {
   title = 'altice-weather-dashboard';
   
   private apiService = inject(ApiService);
+  
+  // States
+  showWeatherForm = false;
   
   // Stats para o template
   apiStats = {
@@ -27,16 +31,16 @@ export class App implements OnInit {
   }
 
   testAPI() {
-    console.log(' Testing API...');
+    console.log('🧪 Testing API...');
     
-    //  tentar obter dados 
+    // Teste para obter dados 
     this.apiService.get(API_ENDPOINTS.WEATHER_DATA).subscribe({
       next: (data) => {
         console.log(' API Response:', data);
         this.updateStats();
       },
       error: (error) => {
-        console.log(' Expected error (no data yet):', error.status);
+        console.log('Expected error (no data yet):', error.status);
         this.updateStats();
       }
     });

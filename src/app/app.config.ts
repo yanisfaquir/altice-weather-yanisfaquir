@@ -7,6 +7,6 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withFetch()), 
+    provideHttpClient(withFetch()), // HttpClient para API calls
   ]
 };

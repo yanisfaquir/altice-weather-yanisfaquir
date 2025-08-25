@@ -61,8 +61,9 @@
 
     <!-- Action Buttons -->
     <div class="flex flex-wrap gap-4 mb-8">
-      <button class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
-        📊 Add Weather Data
+      <button (click)="showWeatherForm = !showWeatherForm" 
+        class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
+        📊 {{ showWeatherForm ? 'Hide' : 'Add Weather Data' }}
       </button>
       <button class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
         🏙️ View Cities
@@ -72,6 +73,8 @@
       </button>
     </div>
 
+
+<!-- 
    
     <div class="glass rounded-2xl p-8 text-center">
       <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
@@ -82,9 +85,21 @@
         <br>
         Next: Weather data form and API integration.
       </p>
-      <!-- Debug Panel (remover em produção) -->
+      Debug Panel (remover em produção)
     </div>
+     -->
+
+      @if (showWeatherForm) {
+        <div class="mb-8">
+          <app-weather-form></app-weather-form>
+        </div>
+      }
+      
   </main>
+  <!-- Weather Form -->
+<div *ngIf="showWeatherForm" class="mb-8">
+  <app-weather-form></app-weather-form>
+</div>
 
   <!-- Footer -->
   <footer class="mt-16 bg-white/10 backdrop-blur-md border-t border-white/20">
@@ -95,6 +110,8 @@
     </div>
   </footer>
 </div>
+
+
 
 <!-- Debug Panel (remover em produção) -->
 <div class="fixed bottom-4 right-4 bg-black/80 text-white p-4 rounded-lg text-sm">
