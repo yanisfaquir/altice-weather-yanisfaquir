@@ -1,4 +1,3 @@
-<!-- Altice Weather Dashboard -->
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
   <!-- Header -->
   <header class="glass backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
@@ -73,7 +72,7 @@
       </button>
     </div>
 
-    <!-- Feature Coming Soon -->
+   
     <div class="glass rounded-2xl p-8 text-center">
       <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
         🚧 Development in Progress
@@ -83,6 +82,7 @@
         <br>
         Next: Weather data form and API integration.
       </p>
+      <!-- Debug Panel (remover em produção) -->
     </div>
   </main>
 
@@ -96,5 +96,16 @@
   </footer>
 </div>
 
-<!-- Router Outlet (for future routing) -->
+<!-- Debug Panel (remover em produção) -->
+<div class="fixed bottom-4 right-4 bg-black/80 text-white p-4 rounded-lg text-sm">
+  <div>Requests: <span [textContent]="apiStats.requestCount">0</span>/100</div>
+  <div>Cache: <span [textContent]="apiStats.cacheStats.size">0</span> items</div>
+  <button 
+    class="bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded mt-2 text-xs"
+    (click)="testAPI()"
+  >
+    Test API
+  </button>
+</div>>
+
 <router-outlet></router-outlet>
