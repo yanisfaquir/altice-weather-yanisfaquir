@@ -3,14 +3,14 @@ import { RouterOutlet } from '@angular/router';
 import { ApiService } from './core/services/api.service';
 import { API_ENDPOINTS } from './core/constants/api.constants';
 import { WeatherFormComponent } from '../app/features/weather-form/components/weather-form/weather-form';
-import { CityList } from '../app/features/dashboard/components/city-list/city-list';
+import { CityListComponent } from '../app/features/dashboard/components/city-list/city-list';
 
 type ActiveView = 'none' | 'weatherForm' | 'cityList';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, WeatherFormComponent, CityList],
+  imports: [RouterOutlet, WeatherFormComponent, CityListComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })

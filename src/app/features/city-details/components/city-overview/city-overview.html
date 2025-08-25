@@ -1,0 +1,240 @@
+<div class="max-w-7xl mx-auto p-4">
+  
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="text-center py-12">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <p class="mt-4 text-gray-600 dark:text-gray-300">Loading city details...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <div class="glass rounded-2xl p-8 text-center">
+      <div class="text-6xl mb-4">⚠️</div>
+      <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Error Loading City Details</h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">{{ error() }}</p>
+      <button 
+        (click)="refresh()"
+        class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+        Try Again
+      </button>
+    </div>
+  }
+
+  <!-- City Details -->
+  @if (cityDetails()) {
+    <div class="space-y-8">
+      
+      <!-- Header -->
+      <div class="glass rounded-2xl p-8">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+              🏙️ {{ cityDetails()!.cityName }}
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300">
+              Detailed weather and network analysis
+            </p>
+          </div>
+          <button 
+            (click)="refresh()"
+            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+            🔄 Refresh
+          </button>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-2xl font-bold text-blue-600">{{ cityDetails()!.totalRecords }}</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Total Records</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-green-600">{{ cityDetails()!.averageTemperature.toFixed(1) }}°C</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Avg Temperature</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold {{ getNetworkPowerColor(cityDetails()!.averageNetworkPower) }}">
+              {{ cityDetails()!.averageNetworkPower.toFixed(1) }}/5
+            </div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Avg Network Power</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-purple-600">{{ cityDetails()!.averageAltitude.toFixed(0) }}m</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Avg Altitude</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Temperature Range & Trend -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Temperature Info -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+            🌡️ Temperature Analysis
+          </h3>
+          
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600 dark:text-gray-300">Range:</span>
+              <span class="font-bold text-gray-800 dark:text-white">
+                {{ cityDetails()!.temperatureRange.min.toFixed(1) }}°C - {{ cityDetails()!.temperatureRange.max.toFixed(1) }}°C
+              </span>
+            </div>
+            
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600 dark:text-gray-300">Trend:</span>
+              <span class="flex items-center {{ getTrendColor(cityDetails()!.temperatureTrend) }} font-bold">
+                {{ getTrendIcon(cityDetails()!.temperatureTrend) }} 
+                <span class="ml-2">{{ cityDetails()!.temperatureTrend | titlecase }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Network Distribution -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+            📶 Network Power Distribution
+          </h3>
+          
+          <div class="space-y-3">
+            @for (dist of cityDetails()!.networkPowerDistribution; track dist.power) {
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600 dark:text-gray-300">
+                  {{ dist.power }}/5 - {{ networkPowerLabels[dist.power] }}
+                </span>
+                <div class="flex items-center">
+                  <div class="w-20 bg-gray-200 rounded-full h-2 mr-3">
+                    <div 
+                      class="h-2 rounded-full {{ getNetworkPowerBgColor(dist.power) }}"
+                      [style.width.%]="dist.percentage">
+                    </div>
+                  </div>
+                  <span class="text-sm font-bold {{ getNetworkPowerColor(dist.power) }}">
+                    {{ dist.percentage.toFixed(1) }}%
+                  </span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Data -->
+      @if (cityDetails()!.monthlyData.length > 0) {
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">
+            📅 Monthly Analysis
+          </h3>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-gray-200 dark:border-gray-600">
+                  <th class="text-left py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">Month</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">Records</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">Avg Temp</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">Avg Network</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">Rainy Days</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (month of cityDetails()!.monthlyData; track month.month) {
+                  <tr class="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+                    <td class="py-3 px-4 font-medium text-gray-800 dark:text-white">
+                      {{ formatMonth(month.month) }}
+                    </td>
+                    <td class="py-3 px-4 text-center text-blue-600 font-bold">
+                      {{ month.recordCount }}
+                    </td>
+                    <td class="py-3 px-4 text-center text-green-600 font-bold">
+                      {{ month.averageTemp.toFixed(1) }}°C
+                    </td>
+                    <td class="py-3 px-4 text-center {{ getNetworkPowerColor(month.averageNetwork) }} font-bold">
+                      {{ month.averageNetwork.toFixed(1) }}/5
+                    </td>
+                    <td class="py-3 px-4 text-center text-gray-600 dark:text-gray-300">
+                      {{ month.rainyDays }}
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+
+      <!-- Worst Records -->
+      @if (cityDetails()!.worstRecords.length > 0) {
+        <div class="glass rounded-2xl p-6 bg-red-50/50 border-l-4 border-red-500">
+          <h3 class="text-xl font-bold text-red-800 dark:text-red-300 mb-6 flex items-center">
+            🚨 Worst Network Performance Records
+          </h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @for (record of cityDetails()!.worstRecords; track record.id) {
+              <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg p-4 border border-red-200">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-red-600 font-bold text-lg">
+                    {{ record.networkPower }}/5 - {{ networkPowerLabels[record.networkPower] }}
+                  </span>
+                  <span class="text-sm text-gray-500">{{ formatDate(record.date) }}</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span class="text-gray-600">Temp:</span>
+                    <span class="font-bold ml-1">{{ record.temperature }}°C</span>
+                  </div>
+                  <div>
+                    <span class="text-gray-600">Altitude:</span>
+                    <span class="font-bold ml-1">{{ record.altitude }}m</span>
+                  </div>
+                  <div>
+                    <span class="text-gray-600">Rain:</span>
+                    <span class="font-bold ml-1">{{ record.isRaining ? '🌧️ Yes' : '☀️ No' }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Recent Records -->
+      @if (cityDetails()!.recentRecords.length > 0) {
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">
+            🕒 Recent Records
+          </h3>
+          
+          <div class="space-y-3">
+            @for (record of cityDetails()!.recentRecords; track record.id) {
+              <div class="flex items-center justify-between p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                <div class="flex items-center space-x-4">
+                  <div class="text-sm text-gray-500">{{ formatDate(record.date) }}</div>
+                  <div class="flex items-center space-x-3">
+                    <span class="font-bold">{{ record.temperature }}°C</span>
+                    <span class="px-2 py-1 rounded text-xs font-medium {{ getNetworkPowerBgColor(record.networkPower) }} {{ getNetworkPowerColor(record.networkPower) }}">
+                      {{ record.networkPower }}/5
+                    </span>
+                    <span class="px-2 py-1 rounded text-xs font-medium {{ getNetworkPowerBgColor(record.networkPower) }} {{ getNetworkPowerColor(record.networkPower) }}">
+                      {{ record.networkPower }}/5
+                    </span>
+                    <span>{{ record.isRaining ? '🌧️' : '☀️' }}</span>
+                  </div>
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-300">
+                  {{ record.altitude }}m
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
