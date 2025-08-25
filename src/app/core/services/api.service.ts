@@ -6,7 +6,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { API_ENDPOINTS } from '../constants/api.constants';
 import { CacheService } from './cache.service';
 import { StorageService } from './storage.service';
-
+import { API_CONFIG } from '../constants/api.constants'
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,10 @@ export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly cache = inject(CacheService);
   private readonly storage = inject(StorageService);
+  private readonly MAX_REQUESTS = API_CONFIG.MAX_REQUESTS;
   
   private requestCount = 0;
-  private readonly MAX_REQUESTS = 100;
-  
+
   constructor() {
     // Carrega contador de requests do localStorage
     this.requestCount = this.storage.getItem<number>('api_request_count') || 0;

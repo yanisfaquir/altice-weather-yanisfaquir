@@ -3,8 +3,8 @@ import { Observable, map, catchError, of } from 'rxjs';
 
 import { ApiService } from '../../../core/services/api.service';
 import { API_ENDPOINTS } from '../../../core/constants/api.constants';
-import { WeatherData, NetworkPower } from '../../../core/models/weather-data.model';
-
+import { WeatherData } from '../../../core/models/weather-data.model';
+import {NetworkPower} from '../../../core/models/weather.enums'
 export interface CityOverview {
   cityName: string;
   totalRecords: number;
