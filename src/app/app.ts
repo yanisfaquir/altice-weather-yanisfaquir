@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from './core/services/api.service';
 import { API_ENDPOINTS } from './core/constants/api.constants';
@@ -11,7 +10,7 @@ type ActiveView = 'none' | 'weatherForm' | 'cityList';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, WeatherFormComponent, CityList],
+  imports: [RouterOutlet, WeatherFormComponent, CityList],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })

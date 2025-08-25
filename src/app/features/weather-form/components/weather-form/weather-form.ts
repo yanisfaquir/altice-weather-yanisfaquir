@@ -1,15 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { WeatherData, TemperatureUnit, AltitudeUnit, NetworkPower, NetworkPowerLabels } from '../../../../core/models/weather-data.model';
+import { WeatherData } from '../../../../core/models/weather-data.model';
+import {TemperatureUnit, AltitudeUnit, NetworkPower, NetworkPowerLabels} from '../../../../core/models/weather.enums'
 import { ApiService } from '../../../../core/services/api.service';
 import { API_ENDPOINTS } from '../../../../core/constants/api.constants';
 
 @Component({
   selector: 'app-weather-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ ReactiveFormsModule],
   templateUrl: './weather-form.html',
   styleUrls: ['./weather-form.scss']
 })
