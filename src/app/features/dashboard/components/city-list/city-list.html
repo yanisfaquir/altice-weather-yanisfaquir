@@ -1,0 +1,214 @@
+<div class="max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+        🏙️ Cities Dashboard
+      </h2>
+      <p class="text-gray-600 dark:text-gray-300">
+        Monitor weather conditions and network performance across cities
+      </p>
+    </div>
+    
+    <button 
+      (click)="refreshData()"
+      [disabled]="isLoading()"
+      class="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 
+             text-white rounded-lg transition-colors flex items-center">
+      @if (isLoading()) {
+        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Loading...
+      } @else {
+        🔄 Refresh
+      }
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="text-center py-12">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <p class="mt-4 text-gray-600 dark:text-gray-300">Loading dashboard data...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <div class="glass rounded-2xl p-8 text-center">
+      <div class="text-6xl mb-4">⚠️</div>
+      <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Error Loading Data</h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">{{ error() }}</p>
+      <button 
+        (click)="refreshData()"
+        class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+        Try Again
+      </button>
+    </div>
+  }
+
+  <!-- Dashboard Content -->
+  @if (dashboardData() && !isLoading()) {
+    <div class="space-y-8">
+      
+      <!-- Summary Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="glass rounded-xl p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-blue-100 rounded-full">
+              <span class="text-2xl">🏙️</span>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Cities</p>
+              <p class="text-2xl font-bold text-gray-800 dark:text-white">
+                {{ dashboardData()!.totalCities }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-xl p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-green-100 rounded-full">
+              <span class="text-2xl">📊</span>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Records</p>
+              <p class="text-2xl font-bold text-gray-800 dark:text-white">
+                {{ dashboardData()!.totalRecords }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-xl p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-yellow-100 rounded-full">
+              <span class="text-2xl">🌡️</span>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Avg Temperature</p>
+              <p class="text-2xl font-bold text-gray-800 dark:text-white">
+                {{ dashboardData()!.averageTemperature }}°C
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-xl p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-purple-100 rounded-full">
+              <span class="text-2xl">📶</span>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Avg Network Power</p>
+              <p class="text-2xl font-bold text-gray-800 dark:text-white">
+                {{ dashboardData()!.averageNetworkPower }}/5
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cities List -->
+      @if (dashboardData()!.cities.length > 0) {
+        <div class="glass rounded-2xl p-8">
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">
+            Cities Overview
+          </h3>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            @for (city of dashboardData()!.cities; track city.cityName) {
+              <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 border border-white/20 
+                          hover:shadow-lg transition-all duration-200 hover:scale-105">
+                
+                <!-- City Header -->
+                <div class="flex items-center justify-between mb-4">
+                  <h4 class="text-lg font-bold text-gray-800 dark:text-white">
+                    {{ city.cityName }}
+                  </h4>
+                  <span class="px-2 py-1 rounded-full text-xs font-medium {{ getStatusColor(city.status) }}">
+                    {{ getStatusIcon(city.status) }} {{ city.status | titlecase }}
+                  </span>
+                </div>
+
+                <!-- City Stats Grid -->
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                  <div class="text-center">
+                    <p class="text-2xl font-bold text-blue-600">{{ city.totalRecords }}</p>
+                    <p class="text-xs text-gray-500">Records</p>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-2xl font-bold text-green-600">{{ city.averageTemperature }}°C</p>
+                    <p class="text-xs text-gray-500">Avg Temp</p>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-2xl font-bold {{ getNetworkPowerColor(city.averageNetworkPower) }}">
+                      {{ city.averageNetworkPower }}/5
+                    </p>
+                    <p class="text-xs text-gray-500">Network</p>
+                  </div>
+                  <div class="text-center">
+                    <p class="text-2xl font-bold text-purple-600">{{ city.rainyDaysPercentage }}%</p>
+                    <p class="text-xs text-gray-500">Rainy Days</p>
+                  </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="border-t border-gray-200 dark:border-gray-600 pt-4">
+                  <div class="flex justify-between text-sm text-gray-600 dark:text-gray-300">
+                    <span>Altitude: {{ city.averageAltitude }}m</span>
+                    <span>Updated: {{ formatDate(city.lastUpdate) }}</span>
+                  </div>
+                  @if (city.worstNetworkPower <= 2) {
+                    <div class="mt-2 flex items-center text-sm text-red-600">
+                      <span class="mr-1">🚨</span>
+                      Worst network power: {{ city.worstNetworkPower }}/5
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      } @else {
+        <!-- No Cities State -->
+        <div class="glass rounded-2xl p-12 text-center">
+          <div class="text-6xl mb-6">🏙️</div>
+          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+            No Cities Data Available
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            Start by adding some weather data to see cities appear here.
+          </p>
+          <button 
+            (click)="refreshData()"
+            class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
+                   transition-colors transform hover:scale-105">
+            🔄 Refresh Data
+          </button>
+        </div>
+      }
+
+      <!-- Alert for Poor Network Cities -->
+      @if (dashboardData()!.citiesWithPoorNetwork > 0) {
+        <div class="glass rounded-2xl p-6 bg-red-50/50 border-l-4 border-red-500">
+          <div class="flex items-center">
+            <span class="text-2xl mr-3">🚨</span>
+            <div>
+              <h4 class="font-bold text-red-800 dark:text-red-300">Network Alert</h4>
+              <p class="text-red-600 dark:text-red-400">
+                {{ dashboardData()!.citiesWithPoorNetwork }} 
+                {{ dashboardData()!.citiesWithPoorNetwork === 1 ? 'city has' : 'cities have' }} 
+                poor network performance (≤ 2/5)
+              </p>
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+  }
+</div>

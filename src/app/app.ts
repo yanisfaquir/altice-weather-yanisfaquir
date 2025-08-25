@@ -4,11 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { ApiService } from './core/services/api.service';
 import { API_ENDPOINTS } from './core/constants/api.constants';
 import { WeatherFormComponent } from '../app/features/weather-form/components/weather-form/weather-form';
+import { CityListComponent } from '../app/features/dashboard/components/city-list/city-list';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, WeatherFormComponent],
+  imports: [CommonModule, RouterOutlet, WeatherFormComponent, CityListComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
@@ -19,6 +20,7 @@ export class App implements OnInit {
   
   // States
   showWeatherForm = false;
+  showCityList = false;
   
   // Stats para o template
   apiStats = {
@@ -33,7 +35,6 @@ export class App implements OnInit {
   testAPI() {
     console.log('🧪 Testing API...');
     
-    // Teste para obter dados 
     this.apiService.get(API_ENDPOINTS.WEATHER_DATA).subscribe({
       next: (data) => {
         console.log(' API Response:', data);
