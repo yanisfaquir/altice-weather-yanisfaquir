@@ -10,7 +10,7 @@ import { DashboardService, CityOverview, DashboardSummary } from '../../services
   templateUrl: './city-list.html',
   styleUrls: ['./city-list.scss']
 })
-export class CityListComponent implements OnInit {
+export class CityList implements OnInit {
   private dashboardService = inject(DashboardService);
 
   // Signals for reactive state
