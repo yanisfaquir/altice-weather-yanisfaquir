@@ -2,21 +2,23 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardService, CityOverview, DashboardSummary } from '../../services/dashboard.service';
+import { CityOverviewComponent } from '../../../city-details/components/city-overview/city-overview';
 
 @Component({
   selector: 'app-city-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CityOverviewComponent],
   templateUrl: './city-list.html',
   styleUrls: ['./city-list.scss']
 })
-export class CityList implements OnInit {
+export class CityListComponent implements OnInit {
   private dashboardService = inject(DashboardService);
 
   // Signals for reactive state
   dashboardData = signal<DashboardSummary | null>(null);
   isLoading = signal(true);
   error = signal<string | null>(null);
+  selectedCity = signal<string | null>(null);
 
   ngOnInit(): void {
     this.loadDashboardData();
@@ -28,12 +30,12 @@ export class CityList implements OnInit {
 
     this.dashboardService.getDashboardData().subscribe({
       next: (data) => {
-        console.log('📊 Dashboard data loaded:', data);
+        console.log('Dashboard data loaded:', data);
         this.dashboardData.set(data);
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error(' Error loading dashboard data:', err);
+        console.error('Error loading dashboard data:', err);
         this.error.set('Failed to load dashboard data. Please try again.');
         this.isLoading.set(false);
       }
@@ -41,15 +43,24 @@ export class CityList implements OnInit {
   }
 
   refreshData(): void {
+    this.selectedCity.set(null); // Hide details when refreshing
     this.loadDashboardData();
+  }
+
+  viewCityDetails(cityName: string): void {
+    this.selectedCity.set(cityName);
+  }
+
+  closeCityDetails(): void {
+    this.selectedCity.set(null);
   }
 
   getStatusIcon(status: CityOverview['status']): string {
     switch (status) {
-      case 'good': return 'good';
-      case 'warning': return 'warning';
-      case 'critical': return 'critical';
-      default: return 'Unknow';
+      case 'good': return '✅';
+      case 'warning': return '⚠️';
+      case 'critical': return '🚨';
+      default: return '❓';
     }
   }
 
