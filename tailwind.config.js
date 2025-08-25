@@ -97,6 +97,13 @@ module.exports = {
       backdropBlur: {
         xs: '2px',
       },
+      // Aspect ratio is now built into Tailwind CSS 3.0+
+      aspectRatio: {
+        '4/3': '4 / 3',
+        '3/2': '3 / 2',
+        '2/3': '2 / 3',
+        '9/16': '9 / 16',
+      },
       boxShadow: {
         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
         'glass-dark': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
@@ -108,7 +115,6 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
     // Custom plugin for glassmorphism utilities
     function({ addUtilities }) {
       const newUtilities = {
