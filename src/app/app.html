@@ -59,50 +59,69 @@
       </div>
     </div>
 
-    <!-- Action Buttons -->
+
     <div class="flex flex-wrap gap-4 mb-8">
-      <button (click)="showWeatherForm = !showWeatherForm" 
-        class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
-        📊 {{ showWeatherForm ? 'Hide' : 'Add Weather Data' }}
+      <button 
+        (click)="toggleWeatherForm()" 
+        [class]="getWeatherFormButtonClass()">
+        @if (isWeatherFormActive) {
+          <span class="flex items-center">
+            ✅ <span class="ml-2">Add Weather Data</span>
+          </span>
+        } @else {
+          📊 Add Weather Data
+        }
       </button>
-      <button (click)="showCityList = !showCityList" 
-              class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
-        🏙️ {{ showCityList ? 'Hide' : 'View Cities' }}
+      
+      <button 
+        (click)="toggleCityList()" 
+        [class]="getCityListButtonClass()">
+        @if (isCityListActive) {
+          <span class="flex items-center">
+            ✅ <span class="ml-2">View Cities</span>
+          </span>
+        } @else {
+          🏙️ View Cities
+        }
       </button>
+      
       <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
         📈 Analytics
       </button>
     </div>
 
-
-<!-- 
-   
-    <div class="glass rounded-2xl p-8 text-center">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-        🚧 Development in Progress
-      </h2>
-      <p class="text-gray-600 dark:text-gray-300">
-        Weather data collection and analysis features are being built step by step.
-        <br>
-        Next: Weather data form and API integration.
-      </p>
-      Debug Panel (remover em produção)
-    </div>
-     -->
-      @if (showCityList) {
-        <div class="mb-8">
+    <!-- Content Sections (só mostra um de cada vez) -->
+      @if (isCityListActive) {
+        <div class="mb-8 animate-fade-in">
           <app-city-list></app-city-list>
         </div>
       }
-      
-      @if (showWeatherForm) {
-        <div class="mb-8">
+
+      @if (isWeatherFormActive) {
+        <div class="mb-8 animate-fade-in">
           <app-weather-form></app-weather-form>
         </div>
       }
+
+      <!-- Feature Coming Soon (só mostra quando nenhum está ativo) -->
+      @if (activeView === 'none') {
+        <div class="glass rounded-2xl p-8 text-center">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+            🚀 Ready to Start!
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300">
+            Choose an option above to get started:
+            <br>
+            <strong>Add Weather Data</strong> to collect new information or <strong>View Cities</strong> to see the dashboard.
+          </p>
+        </div>
+      }
+
+
+
       
   </main>
-  <!-- Weather Form -->
+
 
 
   <!-- Footer -->
