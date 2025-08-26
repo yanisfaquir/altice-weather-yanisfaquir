@@ -219,16 +219,16 @@
                 <div class="flex items-center space-x-4">
                   <div class="text-sm text-gray-500">{{ formatDate(record.date) }}</div>
                   <div class="flex items-center space-x-3">
+                    <span> {{ record.altitude }}m</span>
                     <span class="font-bold">{{ record.temperature }}°C</span>
                     <span class="px-2 py-1 rounded text-xs font-medium {{ getNetworkPowerBgColor(record.networkPower) }} {{ getNetworkPowerColor(record.networkPower) }}">
                       {{ record.networkPower }}/5
                     </span>
                     <span>{{ record.isRaining ? '🌧️' : '☀️' }}</span>
+
                   </div>
                 </div>
-                <div class="text-sm text-gray-600 dark:text-gray-300">
-                  {{ record.altitude }}m
-                </div>
+             
               </div>
             }
           </div>
