@@ -4,13 +4,16 @@ import { ApiService } from './core/services/api.service';
 import { API_ENDPOINTS } from './core/constants/api.constants';
 import { WeatherFormComponent } from '../app/features/weather-form/components/weather-form/weather-form';
 import { CityListComponent } from '../app/features/dashboard/components/city-list/city-list';
+import { SettingsPanel } from '../app/features/settings/components/settings-panel/settings-panel';
 
-type ActiveView = 'none' | 'weatherForm' | 'cityList';
+import { ThemeService } from '../app/core/services/theme.service';
+
+type ActiveView = 'none' | 'weatherForm' | 'cityList' | 'settings';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, WeatherFormComponent, CityListComponent],
+  imports: [RouterOutlet, WeatherFormComponent, CityListComponent, SettingsPanel],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
@@ -21,16 +24,39 @@ export class App implements OnInit {
   
   // Estado único para controlar qual view está ativa
   activeView: ActiveView = 'none';
+
+  
+
+
+  showSettings = false;
   
   // Stats para o template
   apiStats = {
     requestCount: 0,
     cacheStats: { size: 0 }
   };
+  themeService: any;
 
   ngOnInit() {
     this.updateStats();
   }
+
+    toggleSettings(): void {
+    this.activeView = this.activeView === 'settings' ? 'none' : 'settings';
+  }
+
+  get isSettingsActive(): boolean {
+    return this.activeView === 'settings';
+  }
+
+  getSettingsButtonClass(): string {
+    const baseClass = "px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105";
+    
+    if (this.isSettingsActive) {
+      return `${baseClass} bg-gray-600 text-white shadow-lg border-2 border-gray-400`;
+    }
+    return `${baseClass} bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white`;
+}
 
   // Métodos para alternar views
   toggleWeatherForm(): void {
@@ -40,6 +66,21 @@ export class App implements OnInit {
   toggleCityList(): void {
     this.activeView = this.activeView === 'cityList' ? 'none' : 'cityList';
   }
+
+
+toggleTheme(): void {
+  this.themeService.toggleTheme();
+}
+
+getCurrentThemeIcon(): string {
+  const currentTheme = this.themeService.currentTheme();
+  switch(currentTheme) {
+    case 'light': return '🌙'; // Mostra lua para mudar para dark
+    case 'dark': return '🌓';  // Mostra auto
+    case 'auto': return '☀️';  // Mostra sol para light
+    default: return '🌙';
+  }
+}
 
   // Getters para os estados
   get isWeatherFormActive(): boolean {
@@ -87,4 +128,6 @@ export class App implements OnInit {
   private updateStats() {
     this.apiStats = this.apiService.getApiStats();
   }
+
+    
 }
