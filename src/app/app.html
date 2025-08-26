@@ -1,132 +1,54 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-  <!-- Header -->
-  <header class="glass backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <!-- Logo -->
-        <div class="flex items-center">
-          <div class="text-2xl font-bold text-gradient bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            ⛅ Altice Weather
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  </header>
+<app-main-layout>
 
-  <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Welcome Card -->
-    <div class="glass rounded-2xl p-8 mb-8 animate-fade-in">
-      <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@main-title">
-        Weather Communication Dashboard
-      </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6" i18n="@@main-subtitle">
-        Collecting weather data and analyzing its impact on communications across multiple cities.
+  <!-- Dashboard Welcome Card -->
+  <app-dashboard-welcome-card
+    [totalCities]="totalCities()"
+    [totalRecords]="totalRecords()"
+    [avgNetworkPower]="avgNetworkPower()">
+  </app-dashboard-welcome-card>
+
+  <!-- Buttons -->
+  <div class="flex flex-wrap gap-4 mb-8">
+    <button (click)="toggleWeatherForm()" [class]="getWeatherFormButtonClass()">
+      @if (isWeatherFormActive) {
+        <span class="flex items-center">✅ <span class="ml-2" i18n="@@btn-add-weather-active">Add Weather Data</span></span>
+      } @else {
+        <span i18n="@@btn-add-weather">📊 Add Weather Data</span>
+      }
+    </button>
+    
+    <button (click)="toggleCityList()" [class]="getCityListButtonClass()">
+      @if (isCityListActive) {
+        <span class="flex items-center">✅ <span class="ml-2" i18n="@@btn-view-cities-active">View Cities</span></span>
+      } @else {
+        <span i18n="@@btn-view-cities">🏙️ View Cities</span>
+      }
+    </button>
+
+    <button (click)="toggleSettings()" [class]="getSettingsButtonClass()">
+      @if (isSettingsActive) {
+        <span class="flex items-center">✅ <span class="ml-2" i18n="@@btn-settings-active">Settings</span></span>
+      } @else {
+        <span i18n="@@btn-settings">⚙️ Settings</span>
+      }
+    </button>
+  </div>
+
+  <!-- Views -->
+  @if (isCityListActive) { <app-city-list></app-city-list> }
+  @if (isWeatherFormActive) { <app-weather-form></app-weather-form> }
+  @if (activeView === 'none') {
+    <div class="glass rounded-2xl p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@ready-to-start">🚀 Ready to Start!</h2>
+      <p class="text-gray-600 dark:text-gray-300" i18n="@@choose-option-text">
+        Choose an option above to get started:
+        <br>
+        <strong>Add Weather Data</strong> to collect new information or <strong>View Cities</strong> to see the dashboard.
       </p>
-      
-      <!-- Quick Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
-          <div class="text-3xl font-bold text-blue-600">{{ totalCities() }}</div>
-          <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-cities-monitored">Cities Monitored</div>
-        </div>
-        <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
-          <div class="text-3xl font-bold text-green-600">{{ totalRecords() }}</div>
-          <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-data-records">Data Records</div>
-        </div>
-        <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
-         <div class="text-3xl font-bold text-purple-600">
-          {{ avgNetworkPower()  }}
-        </div>
-          <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-avg-network">Avg Network Power</div>
-        </div>
-      </div>
     </div>
+  }
+  @if (isSettingsActive) { <app-settings-panel></app-settings-panel> }
 
-    <div class="flex flex-wrap gap-4 mb-8">
-      <button 
-        (click)="toggleWeatherForm()" 
-        [class]="getWeatherFormButtonClass()">
-        @if (isWeatherFormActive) {
-          <span class="flex items-center">
-            ✅ <span class="ml-2" i18n="@@btn-add-weather-active">Add Weather Data</span>
-          </span>
-        } @else {
-          <span i18n="@@btn-add-weather">📊 Add Weather Data</span>
-        }
-      </button>
-      
-      <button 
-        (click)="toggleCityList()" 
-        [class]="getCityListButtonClass()">
-        @if (isCityListActive) {
-          <span class="flex items-center">
-            ✅ <span class="ml-2" i18n="@@btn-view-cities-active">View Cities</span>
-          </span>
-        } @else {
-          <span i18n="@@btn-view-cities">🏙️ View Cities</span>
-        }
-      </button>
-
-      <button 
-        (click)="toggleSettings()" 
-        [class]="getSettingsButtonClass()">
-        @if (isSettingsActive) {
-          <span class="flex items-center">
-            ✅ <span class="ml-2" i18n="@@btn-settings-active">Settings</span>
-          </span>
-        } @else {
-          <span i18n="@@btn-settings">⚙️ Settings</span>
-        }
-      </button>
-      
-    </div>
-
-    <!-- Content Sections (só mostra um de cada vez) -->
-    @if (isCityListActive) {
-      <div class="mb-8 animate-fade-in">
-        <app-city-list></app-city-list>
-      </div>
-    }
-
-    @if (isWeatherFormActive) {
-      <div class="mb-8 animate-fade-in">
-        <app-weather-form></app-weather-form>
-      </div>
-    }
-
-    <!-- Feature Coming Soon (só mostra quando nenhum está ativo) -->
-    @if (activeView === 'none') {
-      <div class="glass rounded-2xl p-8 text-center">
-        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@ready-to-start">
-          🚀 Ready to Start!
-        </h2>
-        <p class="text-gray-600 dark:text-gray-300" i18n="@@choose-option-text">
-          Choose an option above to get started:
-          <br>
-          <strong>Add Weather Data</strong> to collect new information or <strong>View Cities</strong> to see the dashboard.
-        </p>
-      </div>
-    }
-
-    @if (isSettingsActive) {
-      <div class="mb-8 animate-fade-in">
-        <app-settings-panel></app-settings-panel>
-      </div>
-    }
-  </main>
-
-  <!-- Footer -->
-  <footer class="mt-16 bg-white/10 backdrop-blur-md border-t border-white/20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <div class="text-center text-gray-600 dark:text-gray-400">
-        <p i18n="@@footer-copyright">&copy; 2024 Altice Labs - Weather Communication Dashboard</p>
-      </div>
-    </div>
-  </footer>
-</div>
-
-
+</app-main-layout>
 
 <router-outlet></router-outlet>

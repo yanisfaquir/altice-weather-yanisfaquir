@@ -8,13 +8,15 @@ import { SettingsPanel } from '../app/features/settings/components/settings-pane
 import { ThemeService } from '../app/core/services/theme.service';
 import { signal } from '@angular/core';
 import { DashboardService, DashboardSummary } from './features/dashboard/services/dashboard.service';
+import {MainLayoutComponent} from '../app/core/layout/main-layout/main-layout'
+import {DashboardWelcomeCardComponent} from '../app/features/dashboard/components/dashboard-welcome-card/dashboard-welcome-card'
 
 type ActiveView = 'none' | 'weatherForm' | 'cityList' | 'settings';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, WeatherFormComponent, CityListComponent, SettingsPanel],
+  imports: [RouterOutlet, WeatherFormComponent, CityListComponent, SettingsPanel, MainLayoutComponent, DashboardWelcomeCardComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
