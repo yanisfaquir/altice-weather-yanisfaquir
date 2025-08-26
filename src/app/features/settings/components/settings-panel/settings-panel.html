@@ -1,0 +1,274 @@
+<div class="max-w-4xl mx-auto p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+      ⚙️ Settings
+    </h2>
+    <p class="text-gray-600 dark:text-gray-300">
+      Customize your weather dashboard experience
+    </p>
+  </div>
+
+  <div class="space-y-6">
+    
+    <!-- Theme Settings -->
+    <div class="glass rounded-2xl p-6">
+      <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+        🎨 Appearance
+      </h3>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            Theme Mode
+          </label>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <button 
+              *ngFor="let theme of [ThemeMode.LIGHT, ThemeMode.DARK, ThemeMode.AUTO]"
+              (click)="onThemeChange(theme)"
+              [class.ring-2]="settings.theme === theme"
+              [class.ring-blue-500]="settings.theme === theme"
+              class="flex items-center justify-center p-4 border border-gray-300 dark:border-gray-600 
+                     rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <span class="text-2xl mr-3">{{ getThemeIcon(theme) }}</span>
+              <span class="font-medium">{{ theme | titlecase }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language & Region -->
+    <div class="glass rounded-2xl p-6">
+      <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+        🌍 Language & Region
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Language -->
+        <div>
+          <label for="language" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Language
+          </label>
+          <select 
+            id="language"
+            [(ngModel)]="settings.language"
+            (ngModelChange)="onLanguageChange($event)"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg
+                   bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500">
+            <option *ngFor="let lang of languages" [value]="lang.value">
+              {{ lang.flag }} {{ lang.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Timezone -->
+        <div>
+          <label for="timezone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Timezone
+          </label>
+          <select 
+            id="timezone"
+            [(ngModel)]="settings.timezone"
+            (ngModelChange)="onTimezoneChange($event)"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg
+                   bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500">
+            <option *ngFor="let tz of timezones" [value]="tz.value">
+              {{ tz.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display Settings -->
+    <div class="glass rounded-2xl p-6">
+      <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+        📊 Display Settings
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Date Format -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            Date Format
+          </label>
+          <div class="space-y-2">
+            <label *ngFor="let format of [DateFormat.DD_MM_YYYY, DateFormat.MM_DD_YYYY, DateFormat.YYYY_MM_DD]" 
+                   class="flex items-center">
+              <input 
+                type="radio"
+                [value]="format"
+                [(ngModel)]="settings.dateFormat"
+                (ngModelChange)="onDateFormatChange($event)"
+                class="mr-3 text-blue-600 focus:ring-blue-500">
+              <span>{{ format }} <span class="text-gray-500">({{ getDateFormatExample(format) }})</span></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Temperature Unit -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            Temperature Unit
+          </label>
+          <div class="space-y-2">
+            <label *ngFor="let unit of [TemperatureDisplayUnit.CELSIUS, TemperatureDisplayUnit.FAHRENHEIT]" 
+                   class="flex items-center">
+              <input 
+                type="radio"
+                [value]="unit"
+                [(ngModel)]="settings.temperatureUnit"
+                (ngModelChange)="onTemperatureUnitChange($event)"
+                class="mr-3 text-blue-600 focus:ring-blue-500">
+              <span>{{ getTemperatureUnitDisplay(unit) }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="glass rounded-2xl p-6">
+      <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+        🔔 Notifications
+      </h3>
+      
+      <div class="space-y-4">
+        <label class="flex items-center justify-between">
+          <span class="text-gray-700 dark:text-gray-300">Enable Notifications</span>
+          <input 
+            type="checkbox"
+            [(ngModel)]="settings.notifications.enabled"
+            (ngModelChange)="onNotificationChange('enabled', $event)"
+            class="toggle-checkbox">
+        </label>
+
+        <div [class.opacity-50]="!settings.notifications.enabled" 
+             [class.pointer-events-none]="!settings.notifications.enabled">
+          
+          <label class="flex items-center justify-between">
+            <div>
+              <span class="text-gray-700 dark:text-gray-300">Poor Network Alerts</span>
+              <p class="text-sm text-gray-500">Get notified when network power drops below 2/5</p>
+            </div>
+            <input 
+              type="checkbox"
+              [(ngModel)]="settings.notifications.poorNetworkAlerts"
+              (ngModelChange)="onNotificationChange('poorNetworkAlerts', $event)"
+              class="toggle-checkbox">
+          </label>
+
+          <label class="flex items-center justify-between">
+            <div>
+              <span class="text-gray-700 dark:text-gray-300">Daily Summary</span>
+              <p class="text-sm text-gray-500">Receive daily weather and network reports</p>
+            </div>
+            <input 
+              type="checkbox"
+              [(ngModel)]="settings.notifications.dailySummary"
+              (ngModelChange)="onNotificationChange('dailySummary', $event)"
+              class="toggle-checkbox">
+          </label>
+
+          <label class="flex items-center justify-between">
+            <div>
+              <span class="text-gray-700 dark:text-gray-300">Extreme Weather Alerts</span>
+              <p class="text-sm text-gray-500">Alerts for extreme temperature conditions</p>
+            </div>
+            <input 
+              type="checkbox"
+              [(ngModel)]="settings.notifications.extremeWeatherAlerts"
+              (ngModelChange)="onNotificationChange('extremeWeatherAlerts', $event)"
+              class="toggle-checkbox">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Management -->
+    <div class="glass rounded-2xl p-6">
+      <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+        💾 Data Management
+      </h3>
+      
+      <div class="flex flex-wrap gap-4">
+        <button 
+          (click)="exportSettings()"
+          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+          📤 Export Settings
+        </button>
+        
+        <button 
+          (click)="importSettings()"
+          class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+          📥 Import Settings
+        </button>
+        
+        <button 
+          (click)="resetSettings()"
+          class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors">
+          🔄 Reset to Defaults
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Modal -->
+  <div *ngIf="showExportModal" 
+       class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+       (click)="closeModal()">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full" 
+         (click)="$event.stopPropagation()">
+      <h3 class="text-xl font-bold mb-4">Export Settings</h3>
+      <textarea 
+        [(ngModel)]="exportData"
+        readonly
+        class="w-full h-32 p-3 border rounded-lg resize-none bg-gray-50 dark:bg-gray-700 text-sm font-mono"
+        placeholder="Settings data will appear here...">
+      </textarea>
+      <div class="flex justify-end gap-3 mt-4">
+        <button 
+          (click)="copyExportData()"
+          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+          Copy to Clipboard
+        </button>
+        <button 
+          (click)="closeModal()"
+          class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import Modal -->
+  <div *ngIf="showImportModal" 
+       class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+       (click)="closeModal()">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full" 
+         (click)="$event.stopPropagation()">
+      <h3 class="text-xl font-bold mb-4">Import Settings</h3>
+      <textarea 
+        [(ngModel)]="importData"
+        class="w-full h-32 p-3 border rounded-lg resize-none text-sm font-mono"
+        placeholder="Paste your settings data here...">
+      </textarea>
+      <div *ngIf="importError" class="text-red-500 text-sm mt-2">
+        {{ importError }}
+      </div>
+      <div class="flex justify-end gap-3 mt-4">
+        <button 
+          (click)="processImport()"
+          class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg">
+          Import
+        </button>
+        <button 
+          (click)="closeModal()"
+          class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
