@@ -12,13 +12,13 @@
         
         <!-- Navigation -->
         <nav class="hidden md:flex space-x-8">
-          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors">
+          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors" i18n="@@nav-dashboard">
             Dashboard
           </a>
-          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors">
+          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors" i18n="@@nav-add-data">
             Add Data
           </a>
-          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors">
+          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors" i18n="@@nav-cities">
             Cities
           </a>
         </nav>
@@ -35,10 +35,10 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Welcome Card -->
     <div class="glass rounded-2xl p-8 mb-8 animate-fade-in">
-      <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+      <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@main-title">
         Weather Communication Dashboard
       </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6" i18n="@@main-subtitle">
         Collecting weather data and analyzing its impact on communications across multiple cities.
       </p>
       
@@ -46,19 +46,18 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
           <div class="text-3xl font-bold text-blue-600">0</div>
-          <div class="text-gray-600 dark:text-gray-400">Cities Monitored</div>
+          <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-cities-monitored">Cities Monitored</div>
         </div>
         <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
           <div class="text-3xl font-bold text-green-600">0</div>
-          <div class="text-gray-600 dark:text-gray-400">Data Records</div>
+          <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-data-records">Data Records</div>
         </div>
         <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
           <div class="text-3xl font-bold text-purple-600">N/A</div>
-          <div class="text-gray-600 dark:text-gray-400">Avg Network Power</div>
+          <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-avg-network">Avg Network Power</div>
         </div>
       </div>
     </div>
-
 
     <div class="flex flex-wrap gap-4 mb-8">
       <button 
@@ -66,10 +65,10 @@
         [class]="getWeatherFormButtonClass()">
         @if (isWeatherFormActive) {
           <span class="flex items-center">
-            ✅ <span class="ml-2">Add Weather Data</span>
+            ✅ <span class="ml-2" i18n="@@btn-add-weather-active">Add Weather Data</span>
           </span>
         } @else {
-          📊 Add Weather Data
+          <span i18n="@@btn-add-weather">📊 Add Weather Data</span>
         }
       </button>
       
@@ -78,94 +77,84 @@
         [class]="getCityListButtonClass()">
         @if (isCityListActive) {
           <span class="flex items-center">
-            ✅ <span class="ml-2">View Cities</span>
+            ✅ <span class="ml-2" i18n="@@btn-view-cities-active">View Cities</span>
           </span>
         } @else {
-          🏙️ ities
+          <span i18n="@@btn-view-cities">🏙️ View Cities</span>
         }
       </button>
 
-                <button 
-            (click)="toggleSettings()" 
-            [class]="getSettingsButtonClass()">
-            @if (isSettingsActive) {
-              <span class="flex items-center">
-                ✅ <span class="ml-2">Settings</span>
-              </span>
-            } @else {
-              ⚙️ Settings
-            }
-          </button>
+      <button 
+        (click)="toggleSettings()" 
+        [class]="getSettingsButtonClass()">
+        @if (isSettingsActive) {
+          <span class="flex items-center">
+            ✅ <span class="ml-2" i18n="@@btn-settings-active">Settings</span>
+          </span>
+        } @else {
+          <span i18n="@@btn-settings">⚙️ Settings</span>
+        }
+      </button>
       
-      <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
+      <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105" i18n="@@btn-analytics">
         📈 Analytics
       </button>
     </div>
 
     <!-- Content Sections (só mostra um de cada vez) -->
-      @if (isCityListActive) {
-        <div class="mb-8 animate-fade-in">
-          <app-city-list></app-city-list>
-        </div>
-      }
+    @if (isCityListActive) {
+      <div class="mb-8 animate-fade-in">
+        <app-city-list></app-city-list>
+      </div>
+    }
 
-      @if (isWeatherFormActive) {
-        <div class="mb-8 animate-fade-in">
-          <app-weather-form></app-weather-form>
-        </div>
-      }
+    @if (isWeatherFormActive) {
+      <div class="mb-8 animate-fade-in">
+        <app-weather-form></app-weather-form>
+      </div>
+    }
 
+    <!-- Feature Coming Soon (só mostra quando nenhum está ativo) -->
+    @if (activeView === 'none') {
+      <div class="glass rounded-2xl p-8 text-center">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@ready-to-start">
+          🚀 Ready to Start!
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300" i18n="@@choose-option-text">
+          Choose an option above to get started:
+          <br>
+          <strong>Add Weather Data</strong> to collect new information or <strong>View Cities</strong> to see the dashboard.
+        </p>
+      </div>
+    }
 
-
-      <!-- Feature Coming Soon (só mostra quando nenhum está ativo) -->
-      @if (activeView === 'none') {
-        <div class="glass rounded-2xl p-8 text-center">
-          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-            🚀 Ready to Start!
-          </h2>
-          <p class="text-gray-600 dark:text-gray-300">
-            Choose an option above to get started:
-            <br>
-            <strong>Add Weather Data</strong> to collect new information or <strong>ities</strong> to see the dashboard.
-          </p>
-        </div>
-      }
-
-            @if (isSettingsActive) {
+    @if (isSettingsActive) {
       <div class="mb-8 animate-fade-in">
         <app-settings-panel></app-settings-panel>
       </div>
-      }
-
-
-
-      
+    }
   </main>
-
-
 
   <!-- Footer -->
   <footer class="mt-16 bg-white/10 backdrop-blur-md border-t border-white/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="text-center text-gray-600 dark:text-gray-400">
-        <p>&copy; 2024 Altice Labs - Weather Communication Dashboard</p>
+        <p i18n="@@footer-copyright">&copy; 2024 Altice Labs - Weather Communication Dashboard</p>
       </div>
     </div>
   </footer>
 </div>
 
-
-
 <!-- Debug Panel (remover em produção) -->
 <div class="fixed bottom-4 right-4 bg-black/80 text-white p-4 rounded-lg text-sm">
-  <div>Requests: <span [textContent]="apiStats.requestCount">0</span>/100</div>
-  <div>Cache: <span [textContent]="apiStats.cacheStats.size">0</span> items</div>
+  <div i18n="@@debug-requests">Requests: <span [textContent]="apiStats.requestCount">0</span>/100</div>
+  <div i18n="@@debug-cache">Cache: <span [textContent]="apiStats.cacheStats.size">0</span> items</div>
   <button 
     class="bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded mt-2 text-xs"
     (click)="testAPI()"
-  >
+    i18n="@@debug-test-api">
     Test API
   </button>
-</div>>
+</div>
 
 <router-outlet></router-outlet>

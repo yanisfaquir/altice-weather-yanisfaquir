@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" target-language="pt" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="nav-dashboard" datatype="html">
+        <source> Dashboard </source>
+        <target>Painel Principal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav-add-data" datatype="html">
+        <source> Add Data </source>
+        <target>Adicionar Dados</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav-cities" datatype="html">
+        <source> Cities </source>
+        <target>Cidades</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="main-title" datatype="html">
+        <source> Weather Communication Dashboard </source>
+        <target>Dashboard de Comunicação Meteorológica</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">39,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="main-subtitle" datatype="html">
+        <source> Collecting weather data and analyzing its impact on communications across multiple cities. </source>
+        <target>Recolhendo dados meteorológicos e analisando o seu impacto nas comunicações em múltiplas cidades.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">42,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="stat-cities-monitored" datatype="html">
+        <source>Cities Monitored</source>
+        <target>Cidades Monitorizadas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="stat-data-records" datatype="html">
+        <source>Data Records</source>
+        <target>Registos de Dados</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">53,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="stat-avg-network" datatype="html">
+        <source>Avg Network Power</source>
+        <target>Potência de Rede Média</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">57,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn-add-weather-active" datatype="html">
+        <source>Add Weather Data</source>
+        <target>Adicionar Dados Meteorológicos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">68,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn-add-weather" datatype="html">
+        <source>📊 Add Weather Data</source>
+        <target>📊 Adicionar Dados Meteorológicos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">71,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn-view-cities-active" datatype="html">
+        <source>View Cities</source>
+        <target>Ver Cidades</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">80,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn-view-cities" datatype="html">
+        <source>🏙️ View Cities</source>
+        <target>🏙️ Ver Cidades</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">83,85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn-settings-active" datatype="html">
+        <source>Settings</source>
+        <target>Definições</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">92,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn-settings" datatype="html">
+        <source>⚙️ Settings</source>
+        <target>⚙️ Definições</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">95,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="btn-analytics" datatype="html">
+        <source> 📈 Analytics </source>
+        <target>📈 Análises</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">100,102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ready-to-start" datatype="html">
+        <source> 🚀 Ready to Start! </source>
+        <target>🚀 Pronto para Começar!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">121,123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="choose-option-text" datatype="html">
+        <source> Choose an option above to get started: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Add Weather Data<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> to collect new information or <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>View Cities<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> to see the dashboard. </source>
+        <target>Escolha uma opção acima para começar: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Adicionar Dados Meteorológicos<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> para recolher nova informação ou <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Ver Cidades<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> para ver o painel principal.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">124,128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="footer-copyright" datatype="html">
+        <source>© 2024 Altice Labs - Weather Communication Dashboard</source>
+        <target>© 2024 Altice Labs - Dashboard de Comunicação Meteorológica</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">142,144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="debug-requests" datatype="html">
+        <source>Requests: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [textContent]=&quot;apiStats.requestCount&quot;&gt;"/>0<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>/100</source>
+        <target>Pedidos: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [textContent]=&quot;apiStats.requestCount&quot;&gt;"/>0<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>/100</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">150,151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="debug-cache" datatype="html">
+        <source>Cache: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [textContent]=&quot;apiStats.cacheStats.size&quot;&gt;"/>0<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> items</source>
+        <target>Cache: <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [textContent]=&quot;apiStats.cacheStats.size&quot;&gt;"/>0<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> itens</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="debug-test-api" datatype="html">
+        <source> Test API </source>
+        <target>Testar API</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">156,160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="loading-city-details" datatype="html">
+        <source>Loading city details...</source>
+        <target>A carregar detalhes da cidade...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">7,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error-loading-city" datatype="html">
+        <source>Error Loading City Details</source>
+        <target>Erro ao Carregar Detalhes da Cidade</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="try-again-button" datatype="html">
+        <source> Try Again </source>
+        <target>Tentar Novamente</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="detailed-analysis-subtitle" datatype="html">
+        <source> Detailed weather and network analysis </source>
+        <target>Análise detalhada de meteorologia e rede</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="refresh-button" datatype="html">
+        <source> 🔄 Refresh </source>
+        <target>🔄 Actualizar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="total-records" datatype="html">
+        <source>Total Records</source>
+        <target>Total de Registos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">53,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avg-temperature" datatype="html">
+        <source>Avg Temperature</source>
+        <target>Temperatura Média</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">57,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avg-network-power" datatype="html">
+        <source>Avg Network Power</source>
+        <target>Potência de Rede Média</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">63,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avg-altitude" datatype="html">
+        <source>Avg Altitude</source>
+        <target>Altitude Média</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="temperature-analysis" datatype="html">
+        <source> 🌡️ Temperature Analysis </source>
+        <target>🌡️ Análise de Temperatura</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">78,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="temperature-range" datatype="html">
+        <source>Range:</source>
+        <target>Intervalo:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="temperature-trend" datatype="html">
+        <source>Trend:</source>
+        <target>Tendência:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">90,91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="network-power-distribution" datatype="html">
+        <source> 📶 Network Power Distribution </source>
+        <target>📶 Distribuição de Potência de Rede</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">102,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="monthly-analysis" datatype="html">
+        <source> 📅 Monthly Analysis </source>
+        <target>📅 Análise Mensal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">132,134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="table-month" datatype="html">
+        <source>Month</source>
+        <target>Mês</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">139,140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="table-records" datatype="html">
+        <source>Records</source>
+        <target>Registos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">140,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="table-avg-temp" datatype="html">
+        <source>Avg Temp</source>
+        <target>Temp. Média</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">141,142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="table-avg-network" datatype="html">
+        <source>Avg Network</source>
+        <target>Rede Média</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">142,143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="table-rainy-days" datatype="html">
+        <source>Rainy Days</source>
+        <target>Dias de Chuva</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">143,145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="worst-performance-records" datatype="html">
+        <source> 🚨 Worst Network Performance Records </source>
+        <target>🚨 Registos de Pior Performance de Rede</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">176,178</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="temp-label" datatype="html">
+        <source>Temp:</source>
+        <target>Temp:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">191,192</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="altitude-label" datatype="html">
+        <source>Altitude:</source>
+        <target>Altitude:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">195,196</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="rain-label" datatype="html">
+        <source>Rain:</source>
+        <target>Chuva:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">199,200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recent-records" datatype="html">
+        <source> 🕒 Recent Records </source>
+        <target>🕒 Registos Recentes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/city-details/components/city-overview/city-overview.html</context>
+          <context context-type="linenumber">213,214</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
