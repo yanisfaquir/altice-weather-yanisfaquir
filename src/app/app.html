@@ -145,16 +145,6 @@
   </footer>
 </div>
 
-<!-- Debug Panel (remover em produção) -->
-<div class="fixed bottom-4 right-4 bg-black/80 text-white p-4 rounded-lg text-sm">
-  <div i18n="@@debug-requests">Requests: <span [textContent]="apiStats.requestCount">0</span>/100</div>
-  <div i18n="@@debug-cache">Cache: <span [textContent]="apiStats.cacheStats.size">0</span> items</div>
-  <button 
-    class="bg-blue-500 hover:bg-blue-600 px-2 py-1 rounded mt-2 text-xs"
-    (click)="testAPI()"
-    i18n="@@debug-test-api">
-    Test API
-  </button>
-</div>
+
 
 <router-outlet></router-outlet>
