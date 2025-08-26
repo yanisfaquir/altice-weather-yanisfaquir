@@ -5,8 +5,9 @@ import { API_ENDPOINTS } from './core/constants/api.constants';
 import { WeatherFormComponent } from '../app/features/weather-form/components/weather-form/weather-form';
 import { CityListComponent } from '../app/features/dashboard/components/city-list/city-list';
 import { SettingsPanel } from '../app/features/settings/components/settings-panel/settings-panel';
-
 import { ThemeService } from '../app/core/services/theme.service';
+import { signal } from '@angular/core';
+import { DashboardService, DashboardSummary } from './features/dashboard/services/dashboard.service';
 
 type ActiveView = 'none' | 'weatherForm' | 'cityList' | 'settings';
 
@@ -18,9 +19,15 @@ type ActiveView = 'none' | 'weatherForm' | 'cityList' | 'settings';
   styleUrls: ['./app.scss']
 })
 export class App implements OnInit {
+  
   title = 'altice-weather-dashboard';
   
   private apiService = inject(ApiService);
+  private dashboardService = inject(DashboardService);
+
+  totalCities = signal(0);
+  totalRecords = signal(0);
+  avgNetworkPower = signal<number | null>(null);
   
   // Estado único para controlar qual view está ativa
   activeView: ActiveView = 'none';
@@ -39,6 +46,21 @@ export class App implements OnInit {
 
   ngOnInit() {
     this.updateStats();
+    this.loadDashboardStats();
+
+    
+  }
+
+
+  private loadDashboardStats(): void {
+    this.dashboardService.getDashboardData().subscribe({
+      next: (data: DashboardSummary) => {
+        this.totalCities.set(data.totalCities);
+        this.totalRecords.set(data.totalRecords);
+        this.avgNetworkPower.set(data.averageNetworkPower);
+      },
+      error: (err) => console.error('Error loading dashboard stats:', err)
+    });
   }
 
     toggleSettings(): void {

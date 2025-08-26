@@ -10,23 +10,6 @@
           </div>
         </div>
         
-        <!-- Navigation -->
-        <nav class="hidden md:flex space-x-8">
-          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors" i18n="@@nav-dashboard">
-            Dashboard
-          </a>
-          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors" i18n="@@nav-add-data">
-            Add Data
-          </a>
-          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md transition-colors" i18n="@@nav-cities">
-            Cities
-          </a>
-        </nav>
-
-        <!-- Theme Toggle (placeholder) -->
-        <button class="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors">
-          🌙
-        </button>
       </div>
     </div>
   </header>
@@ -45,15 +28,17 @@
       <!-- Quick Stats -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
-          <div class="text-3xl font-bold text-blue-600">0</div>
+          <div class="text-3xl font-bold text-blue-600">{{ totalCities() }}</div>
           <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-cities-monitored">Cities Monitored</div>
         </div>
         <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
-          <div class="text-3xl font-bold text-green-600">0</div>
+          <div class="text-3xl font-bold text-green-600">{{ totalRecords() }}</div>
           <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-data-records">Data Records</div>
         </div>
         <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
-          <div class="text-3xl font-bold text-purple-600">N/A</div>
+         <div class="text-3xl font-bold text-purple-600">
+          {{ avgNetworkPower()  }}
+        </div>
           <div class="text-gray-600 dark:text-gray-400" i18n="@@stat-avg-network">Avg Network Power</div>
         </div>
       </div>
@@ -96,9 +81,6 @@
         }
       </button>
       
-      <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105" i18n="@@btn-analytics">
-        📈 Analytics
-      </button>
     </div>
 
     <!-- Content Sections (só mostra um de cada vez) -->
