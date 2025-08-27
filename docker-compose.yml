@@ -10,11 +10,6 @@ services:
     restart: unless-stopped
     ports:
       - "3500:3500"
-    volumes:
-      - .:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true
-    profiles:
-      - dev
+      - USE_REMOTE_API=false   # Força uso de localStorage/mocks no container

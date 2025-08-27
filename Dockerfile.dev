@@ -1,23 +1,26 @@
-# Development Dockerfile with hot reload
+# Base image
 FROM node:20-alpine
 
-# Set working directory
+# Define diretório de trabalho
 WORKDIR /app
 
-# Install Angular CLI globally
-RUN npm install -g @angular/cli@18
+# Instala Angular CLI
+RUN npm install -g @angular/cli@18 serve
 
-# Copy package files
+# Copia package.json e package-lock.json
 COPY package*.json ./
 
-# Install all dependencies (including devDependencies)
+# Instala dependências
 RUN npm install
 
-# Copy source code
+# Copia todo o código
 COPY . .
 
-# Expose port
+# Build da app Angular (modo desenvolvimento)
+RUN ng build --configuration development
+
+# Expõe a porta
 EXPOSE 3500
 
-# Start development server with hot reload
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "3500", "--live-reload", "--watch"]
+# Serve a aplicação Angular como estático
+CMD ["serve", "-s", "dist/altice-weather-yanisfaquir", "-l", "3500"]

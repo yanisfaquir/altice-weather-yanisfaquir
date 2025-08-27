@@ -17,7 +17,7 @@ import {
 } from '../../../../core/models/settings.model';
 
 // Import pipes
-import { TranslatePipe, LocalizedDatePipe, TemperaturePipe } from '../../../../shared/pipes/translate.pipe';
+import { TranslatePipe} from '../../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-settings-panel',
@@ -25,9 +25,7 @@ import { TranslatePipe, LocalizedDatePipe, TemperaturePipe } from '../../../../s
   imports: [
     CommonModule, 
     FormsModule, 
-    TranslatePipe, 
-    LocalizedDatePipe,
-    TemperaturePipe
+    TranslatePipe,
   ],
   templateUrl: './settings-panel.html',
   styleUrls: ['./settings-panel.scss']
