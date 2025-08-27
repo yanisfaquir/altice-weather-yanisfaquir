@@ -1,0 +1,26 @@
+# Base image
+FROM node:20-alpine
+
+# Define diretório de trabalho
+WORKDIR /app
+
+# Instala Angular CLI
+RUN npm install -g @angular/cli@18 serve
+
+# Copia package.json e package-lock.json
+COPY package*.json ./
+
+# Instala dependências
+RUN npm install
+
+# Copia todo o código
+COPY . .
+
+# Build da app Angular (modo desenvolvimento)
+RUN ng build --configuration development
+
+# Expõe a porta
+EXPOSE 3500
+
+# Serve a aplicação Angular como estático
+CMD ["serve", "-s", "dist/altice-weather-yanisfaquir", "-l", "3500"]

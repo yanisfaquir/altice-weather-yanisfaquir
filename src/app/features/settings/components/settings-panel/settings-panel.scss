@@ -1,0 +1,130 @@
+// src/app/features/settings/components/settings-panel/settings-panel.scss
+
+.toggle-checkbox {
+  appearance: none;
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  background-color: #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:checked {
+    background-color: #3b82f6;
+    
+    &:before {
+      transform: translateX(1.5rem);
+    }
+  }
+  
+  &:focus {
+    ring: 2px;
+    ring-color: #3b82f6;
+    ring-opacity: 0.5;
+  }
+  
+  &:hover {
+    background-color: #9ca3af;
+    
+    &:checked {
+      background-color: #2563eb;
+    }
+  }
+}
+
+.dark .toggle-checkbox {
+  background-color: #4b5563;
+  
+  &:before {
+    background-color: #f9fafb;
+  }
+  
+  &:checked {
+    background-color: #3b82f6;
+  }
+  
+  &:hover {
+    background-color: #6b7280;
+    
+    &:checked {
+      background-color: #2563eb;
+    }
+  }
+}
+
+// Glass effect specific to settings panel
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  .dark & {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Smooth transitions for settings changes
+.settings-section {
+  transition: all 0.3s ease-in-out;
+}
+
+// Better mobile responsiveness
+@media (max-width: 768px) {
+  .glass {
+    margin: 0.5rem;
+    padding: 1rem !important;
+  }
+  
+  .grid-cols-1.md\\:grid-cols-2,
+  .grid-cols-1.md\\:grid-cols-3 {
+    gap: 1rem;
+  }
+}
+
+// Animation for modal overlay
+.modal-overlay {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Animation for modal content
+.modal-content {
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
