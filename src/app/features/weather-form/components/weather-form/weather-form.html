@@ -1,0 +1,221 @@
+<div class="max-w-2xl mx-auto">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+      🌤️ {{ 'weather.form.title' | translate }}
+    </h2>
+    <p class="text-gray-600 dark:text-gray-300">
+      {{ 'weather.form.description' | translate }}
+    </p>
+  </div>
+
+  <!-- Form Card -->
+  <form [formGroup]="weatherForm" (ngSubmit)="onSubmit()" class="glass rounded-2xl p-8 space-y-6">
+    
+    <!-- City -->
+    <div class="space-y-2">
+      <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        🏙️ {{ 'weather.form.city' | translate }} *
+      </label>
+      <input
+        id="city"
+        type="text"
+        formControlName="city"
+        [placeholder]="'weather.form.cityPlaceholder' | translate"
+        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
+               bg-white/50 dark:bg-gray-800/50 
+               focus:ring-2 focus:ring-blue-500 focus:border-transparent
+               placeholder-gray-500 dark:placeholder-gray-400
+               transition-all duration-200"
+      >
+      <div *ngIf="weatherForm.get('city')?.errors && weatherForm.get('city')?.touched" 
+           class="text-red-500 text-sm">
+        <div *ngIf="weatherForm.get('city')?.errors?.['required']">
+          {{ 'weather.form.validation.cityRequired' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Temperature -->
+    <div class="space-y-2">
+      <label for="temperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        🌡️ {{ 'weather.form.temperature' | translate }} ({{ getCurrentTemperatureUnit() }})
+      </label>
+      <div class="relative">
+        <input
+          id="temperature"
+          type="number"
+          formControlName="temperature"
+          [placeholder]="getTemperaturePlaceholder()"
+          step="0.1"
+          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
+                 bg-white/50 dark:bg-gray-800/50 
+                 focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                 transition-all duration-200"
+        >
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+          <span class="text-gray-500 text-sm">{{ getCurrentTemperatureSymbol() }}</span>
+        </div>
+      </div>
+      <div *ngIf="weatherForm.get('temperature')?.errors && weatherForm.get('temperature')?.touched" 
+           class="text-red-500 text-sm">
+        <div *ngIf="weatherForm.get('temperature')?.errors?.['required']">
+          {{ 'weather.form.validation.temperatureRequired' | translate }}
+        </div>
+      </div>
+      <div class="mt-1 text-xs text-gray-500">
+        {{ 'weather.form.temperatureHelper' | translate: getTemperatureConversionExample() }}
+      </div>
+    </div>
+
+    <!-- Date -->
+    <div class="space-y-2">
+      <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <!-- 📅 {{ 'weather.form.date' | translate }} * -->
+      </label>
+      <input
+        id="date"
+        type="date"
+        formControlName="date"
+        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
+               bg-white/50 dark:bg-gray-800/50 
+               focus:ring-2 focus:ring-blue-500 focus:border-transparent
+               transition-all duration-200"
+      >
+      <div *ngIf="weatherForm.get('date')?.invalid && weatherForm.get('date')?.touched" 
+           class="text-red-500 text-sm">
+        <!-- {{ 'weather.form.validation.dateRequired' | translate }} -->
+      </div>
+    </div>
+
+    <!-- Raining -->
+    <div class="space-y-2">
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        🌧️ {{ 'weather.form.raining' | translate }}
+      </label>
+      <div class="flex space-x-4">
+        <label class="flex items-center">
+          <input
+            type="radio"
+            formControlName="isRaining"
+            [value]="false"
+            class="mr-2 text-blue-600 focus:ring-blue-500"
+          >
+          <span class="text-gray-700 dark:text-gray-300">☀️ </span>
+          <!-- <span class="text-gray-700 dark:text-gray-300">☀️ {{ 'weather.form.notRaining' | translate }}</span> -->
+
+        </label>
+        <label class="flex items-center">
+          <input
+            type="radio"
+            formControlName="isRaining"
+            [value]="true"
+            class="mr-2 text-blue-600 focus:ring-blue-500"
+          >
+          <!-- <span class="text-gray-700 dark:text-gray-300">🌧️ {{ 'weather.form.rainingNow' | translate }}</span> -->
+          <span class="text-gray-700 dark:text-gray-300">🌧️</span>
+
+        </label>
+      </div>
+    </div>
+
+    <!-- Network Power -->
+    <div class="space-y-2">
+      <label for="networkPower" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        📶 {{ 'weather.form.networkPower' | translate }} *
+      </label>
+      <select
+        id="networkPower"
+        formControlName="networkPower"
+        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
+               bg-white/50 dark:bg-gray-800/50 
+               focus:ring-2 focus:ring-blue-500 focus:border-transparent
+               transition-all duration-200"
+      >
+        <option value="">{{ 'weather.form.selectNetworkPower' | translate }}</option>
+        <option value="1">1 - {{ 'weather.form.networkPower.critical' | translate }}</option>
+        <option value="2">2 - {{ 'weather.form.networkPower.poor' | translate }}</option>
+        <option value="3">3 - {{ 'weather.form.networkPower.average' | translate }}</option>
+        <option value="4">4 - {{ 'weather.form.networkPower.good' | translate }}</option>
+        <option value="5">5 - {{ 'weather.form.networkPower.excellent' | translate }}</option>
+      </select>
+      <div *ngIf="weatherForm.get('networkPower')?.invalid && weatherForm.get('networkPower')?.touched" 
+           class="text-red-500 text-sm">
+        {{ 'weather.form.validation.networkPowerRequired' | translate }}
+      </div>
+    </div>
+
+    <!-- Altitude -->
+    <div class="space-y-2">
+      <label for="altitude" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        ⛰️ {{ 'weather.form.altitude' | translate }} ({{ getCurrentAltitudeUnit() }})
+      </label>
+      <div class="relative">
+        <input
+          id="altitude"
+          type="number"
+          formControlName="altitude"
+          [placeholder]="getAltitudePlaceholder()"
+          step="1"
+          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
+                 bg-white/50 dark:bg-gray-800/50 
+                 focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                 transition-all duration-200"
+        >
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+          <span class="text-gray-500 text-sm">{{ getCurrentAltitudeSymbol() }}</span>
+        </div>
+      </div>
+      <div *ngIf="weatherForm.get('altitude')?.errors && weatherForm.get('altitude')?.touched" 
+           class="text-red-500 text-sm">
+        {{ 'weather.form.validation.altitudeRequired' | translate }}
+      </div>
+    </div>
+
+    <!-- Current Settings Info -->
+    <div class="mt-8 glass rounded-xl p-4">
+      <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+        <div class="font-medium mb-2">{{ 'weather.form.currentSettings' | translate }}:</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <div>{{ 'settings.currentLanguage' | translate }}: {{ getCurrentLanguageName() }}</div>
+          <div>{{ 'settings.temperatureUnit' | translate }}: {{ getCurrentTemperatureUnit() }}</div>
+          <div>{{ 'settings.currentTimezone' | translate }}: {{ getCurrentTimezoneName() }}</div>
+          <div>{{ 'weather.form.currentTime' | translate }}: {{ getCurrentTime() }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="flex justify-end space-x-4 pt-6">
+      <button
+        type="button"
+        (click)="resetForm()"
+        class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-lg
+               transition-all duration-200 transform hover:scale-105"
+      >
+        🔄 {{ 'common.reset' | translate }}
+      </button>
+      <button
+        type="submit"
+        [disabled]="weatherForm.invalid || isSubmitting()"
+        class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 
+               hover:from-blue-600 hover:to-blue-700 
+               disabled:from-gray-400 disabled:to-gray-500
+               text-white rounded-lg font-medium
+               transition-all duration-200 transform hover:scale-105
+               disabled:transform-none disabled:cursor-not-allowed"
+      >
+        <span *ngIf="!isSubmitting()">💾 {{ 'weather.form.submit' | translate }}</span>
+        <span *ngIf="isSubmitting()" class="flex items-center">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          {{ 'common.submitting' | translate }}
+        </span>
+      </button>
+    </div>
+
+
+  </form>
+</div>

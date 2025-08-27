@@ -1,0 +1,24 @@
+<div class="glass rounded-2xl p-8 mb-8 animate-fade-in">
+  <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+    {{ 'main.title' | translate }}
+  </h1>
+  <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+    {{ 'main.subtitle' | translate }}
+  </p>
+  
+  <!-- Quick Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
+      <div class="text-3xl font-bold text-blue-600">{{ totalCities }}</div>
+      <div class="text-gray-600 dark:text-gray-400">{{ 'stats.totalCities' | translate }}</div>
+    </div>
+    <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
+      <div class="text-3xl font-bold text-green-600">{{ totalRecords }}</div>
+      <div class="text-gray-600 dark:text-gray-400">{{ 'stats.totalRecords' | translate }}</div>
+    </div>
+    <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-6 text-center">
+      <div class="text-3xl font-bold text-purple-600">{{ avgNetworkPower }}</div>
+      <div class="text-gray-600 dark:text-gray-400">{{ 'stats.avgNetworkPower' | translate }}</div>
+    </div>
+  </div>
+</div>

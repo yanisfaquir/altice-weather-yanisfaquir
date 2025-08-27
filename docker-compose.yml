@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  altice-weather-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: altice-weather-dashboard:dev
+    container_name: altice-weather-dev
+    restart: unless-stopped
+    ports:
+      - "3500:3500"
+    environment:
+      - NODE_ENV=development
+      - USE_REMOTE_API=false   # Força uso de localStorage/mocks no container
