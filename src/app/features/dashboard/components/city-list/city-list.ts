@@ -11,7 +11,7 @@ import {CityOverviewComponent} from '../../../../features/city-details/component
 @Component({
   selector: 'app-city-list',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, LocalizedDatePipe, CityOverviewComponent],
+  imports: [CommonModule, CityOverviewComponent],
   templateUrl: './city-list.html',
   styleUrls: ['./city-list.scss']
 })

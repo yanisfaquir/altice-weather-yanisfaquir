@@ -1,10 +1,9 @@
-// src/app/core/services/i18n.service.ts
 import { Injectable, LOCALE_ID, Inject, signal, computed, effect } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from '../config/locale-config';
 
 export interface TranslationKeys {
-  // Common
+
   'common.loading': string;
   'common.save': string;
   'common.cancel': string;
@@ -20,31 +19,23 @@ export interface TranslationKeys {
   'common.copy': string;
   'common.reset': string;
   'common.submitting': string;
-  
-  // App
+
   'app.title': string;
   'app.subtitle': string;
-  
-  // Navigation
   'nav.addData': string;
   'nav.cities': string;
   'nav.settings': string;
-  
-  // Welcome
   'welcome.title': string;
   'welcome.description': string;
-  
-  // Stats
   'stats.totalCities': string;
   'stats.totalRecords': string;
   'stats.avgNetworkPower': string;
   
-  // Footer
+
   'footer.copyright': string;
   'footer.lastUpdate': string;
   'footer.version': string;
-  
-  // Weather Form
+
   'weather.form.title': string;
   'weather.form.description': string;
   'weather.form.city': string;
@@ -98,7 +89,7 @@ export interface TranslationKeys {
   'cities.poor': string;
   'cities.critical': string;
   
-  // Settings
+
   'settings.title': string;
   'settings.customize': string;
   'settings.appearance': string;
@@ -132,18 +123,17 @@ export interface TranslationKeys {
   'settings.importPlaceholder': string;
   'settings.importError': string;
   
-  // Themes
+
   'theme.light': string;
   'theme.dark': string;
   'theme.auto': string;
-  
-  // Units
+
   'units.celsius': string;
   'units.fahrenheit': string;
   'units.meters': string;
   'units.feet': string;
   
-  // Status
+
   'status.online': string;
   'status.offline': string;
   'status.error': string;

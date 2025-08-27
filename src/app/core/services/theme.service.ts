@@ -1,4 +1,3 @@
-// src/app/core/services/theme.service.ts (Fixed)
 import { Injectable, signal, computed, effect } from '@angular/core';
 import { StorageService } from './storage.service';
 
