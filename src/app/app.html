@@ -34,9 +34,15 @@
     </button>
   </div>
 
+  <button (click)="setLocale('pt')">PT</button>
+<button (click)="setLocale('en')">EN</button>
+
+
   <!-- Views -->
   @if (isCityListActive) { <app-city-list></app-city-list> }
-  @if (isWeatherFormActive) { <app-weather-form></app-weather-form> }
+ @if (isWeatherFormActive) { 
+  <app-weather-form (dataAdded)="onDataAdded()"></app-weather-form> 
+}
   @if (activeView === 'none') {
     <div class="glass rounded-2xl p-8 text-center">
       <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@ready-to-start">🚀 Ready to Start!</h2>

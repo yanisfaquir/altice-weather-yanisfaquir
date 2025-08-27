@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="btn-add-weather" datatype="html">
         <source>📊 Add Weather Data</source>
-        <target>📊 Adicionar Dados Meteorológicos</target>
+        <target>📊 Adicionar Dados MeteorológicosSSSS</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
           <context context-type="linenumber">71,73</context>

@@ -1,61 +1,74 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+// src/app/features/dashboard/components/city-list/city-list.component.ts
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardService, CityOverview, DashboardSummary } from '../../services/dashboard.service';
-import { CityOverviewComponent } from '../../../city-details/components/city-overview/city-overview';
-
+import { I18nService } from '../../../../core/services/i18n.service';
+import { SettingsService } from '../../../../features/settings/components/services/settings.service';
+import { TimezoneService } from '../../../../core/services/timezone.service';
+import { TranslatePipe, LocalizedDatePipe } from '../../../../shared/pipes/translate.pipe';
+import {CityOverviewComponent} from '../../../../features/city-details/components/city-overview/city-overview'
 @Component({
   selector: 'app-city-list',
   standalone: true,
-  imports: [CommonModule, CityOverviewComponent],
+  imports: [CommonModule, TranslatePipe, LocalizedDatePipe, CityOverviewComponent],
   templateUrl: './city-list.html',
   styleUrls: ['./city-list.scss']
 })
 export class CityListComponent implements OnInit {
   private dashboardService = inject(DashboardService);
+  private i18nService = inject(I18nService);
+  private settingsService = inject(SettingsService);
+  private timezoneService = inject(TimezoneService);
 
-  // Signals for reactive state
-  dashboardData = signal<DashboardSummary | null>(null);
-  isLoading = signal(true);
-  error = signal<string | null>(null);
-  selectedCity = signal<string | null>(null);
+  // Reactive state
+  readonly isLoading = signal(false);
+  readonly error = signal<string | null>(null);
+  readonly dashboardData = signal<DashboardSummary | null>(null);
+  readonly selectedCity = signal<string | null>(null);
 
   ngOnInit(): void {
-    this.loadDashboardData();
+    this.refreshData();
   }
 
-  private loadDashboardData(): void {
+  refreshData(): void {
     this.isLoading.set(true);
     this.error.set(null);
-
+    
     this.dashboardService.getDashboardData().subscribe({
       next: (data) => {
-        console.log('Dashboard data loaded:', data);
+        console.log('CityList: Dashboard data loaded:', data);
         this.dashboardData.set(data);
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error('Error loading dashboard data:', err);
+        console.error('CityList: Error loading data:', err);
         this.error.set('Failed to load dashboard data. Please try again.');
         this.isLoading.set(false);
       }
     });
   }
 
-  refreshData(): void {
-    this.selectedCity.set(null); // Hide details when refreshing
-    this.loadDashboardData();
+  // Format temperature with current settings
+  formatTemperature(tempCelsius: number): string {
+    return this.settingsService.formatTemperature(tempCelsius);
   }
 
-  viewCityDetails(cityName: string): void {
-    this.selectedCity.set(cityName);
+  // Format date with current timezone and locale
+  formatDate(date: Date): string {
+    return this.settingsService.formatDateTime(new Date(date));
   }
 
-  closeCityDetails(): void {
-    this.selectedCity.set(null);
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'good': return 'bg-green-100 text-green-800';
+      case 'warning': return 'bg-yellow-100 text-yellow-800';
+      case 'critical': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   }
 
-  getStatusIcon(status: CityOverview['status']): string {
+  getStatusIcon(status: string): string {
     switch (status) {
       case 'good': return '✅';
       case 'warning': return '⚠️';
@@ -64,28 +77,18 @@ export class CityListComponent implements OnInit {
     }
   }
 
-  getStatusColor(status: CityOverview['status']): string {
-    switch (status) {
-      case 'good': return 'text-green-600 bg-green-100';
-      case 'warning': return 'text-yellow-600 bg-yellow-100';
-      case 'critical': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
-  }
-
-  getNetworkPowerColor(networkPower: number): string {
-    if (networkPower >= 4) return 'text-green-600';
-    if (networkPower >= 3) return 'text-yellow-600';
+  getNetworkPowerColor(power: number): string {
+    if (power >= 4) return 'text-green-600';
+    if (power >= 3) return 'text-yellow-600';
+    if (power >= 2) return 'text-orange-600';
     return 'text-red-600';
   }
 
-  formatDate(date: Date): string {
-    return new Date(date).toLocaleDateString('pt-PT', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+  viewCityDetails(cityName: string): void {
+    this.selectedCity.set(cityName);
+  }
+
+  closeCityDetails(): void {
+    this.selectedCity.set(null);
   }
 }

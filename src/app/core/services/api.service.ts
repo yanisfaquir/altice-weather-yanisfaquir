@@ -41,43 +41,80 @@ export class ApiService {
   }
 
   // GET request com fallback local
-  get<T>(endpoint: string, useCache = true): Observable<T> {
-    const cacheKey = `GET_${endpoint}`;
-    
-    // Verificar cache primeiro
-    if (useCache) {
-      const cached = this.cache.get<T>(cacheKey);
-      if (cached) {
-        console.log('📦 Data from cache');
-        return cached;
-      }
-    }
-    
-    // Se estiver em modo offline, usar dados locais
-    if (this.isOfflineMode) {
-      return this.getFromLocalStorage<T>(endpoint);
-    }
-    
-    // Verificar limite de requests
-    if (this.requestCount >= this.MAX_REQUESTS) {
-      console.warn('⚠️ API request limit reached! Switching to local storage');
-      this.enableOfflineMode();
-      return this.getFromLocalStorage<T>(endpoint);
-    }
-    
-    return this.http.get<T>(endpoint).pipe(
-      tap(data => {
-        console.log('🌐 Data from API');
-        // Guardar no cache
-        this.cache.set(cacheKey, data);
-        // Guardar backup local
-        this.saveToLocalStorage(endpoint, data);
-        // Incrementar contador
-        this.incrementRequestCount();
-      }),
-      catchError(error => this.handleError<T>(error, endpoint))
-    );
+// src/app/core/services/api.service.ts - Método get() corrigido
+get<T>(endpoint: string, useCache = false): Observable<T> {
+  console.log(`API GET: ${endpoint}`);
+  
+  // Para weather-data, sempre retornar dados combinados (local + remoto)
+  if (endpoint.includes('weatherData') || endpoint.includes('weather-data')) {
+    return this.getCombinedWeatherData() as Observable<T>;
   }
+  
+  // Lógica normal para outros endpoints...
+  return this.http.get<T>(endpoint).pipe(
+    tap(() => this.incrementRequestCount()),
+    catchError(error => this.handleError<T>(error, endpoint))
+  );
+}
+
+private getCombinedWeatherData(): Observable<WeatherData[]> {
+  // 1. Obter dados locais primeiro
+  const localData = this.storage.getItem<WeatherData[]>('local_weatherData') || [];
+  console.log(`Local data found: ${localData.length} items`);
+  
+  // 2. Se offline ou sem requests, retornar só local
+  if (this.isOfflineMode || this.requestCount >= this.MAX_REQUESTS) {
+    return of(localData);
+  }
+  
+  // 3. Tentar obter dados remotos
+  return this.http.get<WeatherData[]>(API_ENDPOINTS.WEATHER_DATA).pipe(
+    map(remoteData => {
+      console.log(`Remote data: ${remoteData?.length || 0} items`);
+      console.log(`Local data: ${localData.length} items`);
+      
+      const combined = [...(remoteData || []), ...localData];
+      console.log(`Combined total: ${combined.length} items`);
+      
+      return combined;
+    }),
+    tap(() => this.incrementRequestCount()),
+    catchError(error => {
+      console.log('Remote API failed, using local only');
+      return of(localData);
+    })
+  );
+}
+// ADICIONAR este método novo
+private getWeatherDataCombined(): Observable<WeatherData[]> {
+  const localData = this.storage.getItem<WeatherData[]>('local_weatherData') || [];
+  console.log('🗄️ Local weather data:', localData);
+  
+  if (this.isOfflineMode || this.requestCount >= this.MAX_REQUESTS) {
+    console.log('🔌 Using only local data');
+    return of(localData).pipe(delay(200));
+  }
+  
+  // Tentar obter dados remotos E combinar com locais
+  return this.http.get<WeatherData[]>(API_ENDPOINTS.WEATHER_DATA).pipe(
+    map(remoteData => {
+      const combined = [...(remoteData || []), ...localData];
+      console.log('🔄 Combined remote + local data:', combined.length, 'items');
+      
+      // Salvar dados remotos como backup
+      if (remoteData && remoteData.length > 0) {
+        this.storage.setItem('remote_weatherData_backup', remoteData);
+      }
+      
+      return combined;
+    }),
+    tap(() => this.incrementRequestCount()),
+    catchError(error => {
+      console.log('❌ Remote failed, using only local data');
+      return of(localData);
+    })
+  );
+}
 
   // POST request com fallback local
   post<T>(endpoint: string, data: any): Observable<T> {
@@ -166,26 +203,30 @@ export class ApiService {
   }
 
   private postToLocalStorage<T>(endpoint: string, data: any): Observable<T> {
-    const localKey = this.getLocalStorageKey(endpoint);
-    const existingData = this.storage.getItem<T[]>(localKey) || [];
+    console.log('Saving to local storage...');
     
-    // Gerar ID local para o novo item
+    const existingData = this.storage.getItem<WeatherData[]>('local_weatherData') || [];
+    
     const newItem = {
       ...data,
       id: this.generateLocalId(),
       createdAt: new Date(),
       updatedAt: new Date(),
-      _isLocal: true // Flag para identificar dados locais
+      _isLocal: true
     };
     
-    const updatedData = Array.isArray(existingData) 
-      ? [...existingData, newItem]
-      : [newItem];
+    const updatedData = [...existingData, newItem];
     
-    this.storage.setItem(localKey, updatedData);
-    console.log('💾 Saved to local storage');
+    // Salvar com a chave correta
+    this.storage.setItem('local_weatherData', updatedData);
     
-    return of(newItem as T).pipe(delay(200));
+    console.log(`Saved. Total local items: ${updatedData.length}`);
+    console.log('New item:', newItem);
+    
+    // Invalidar cache para forçar refresh
+    this.invalidateRelatedCache('weather-data');
+    
+    return of(newItem as T).pipe(delay(100));
   }
 
   private putToLocalStorage<T>(endpoint: string, data: any): Observable<T> {
@@ -417,13 +458,14 @@ export class ApiService {
     }
   }
 
+
   private invalidateRelatedCache(endpoint: string): void {
-    const cacheStats = this.cache.getStats();
-    cacheStats.keys.forEach(key => {
-      if (key.includes('GET_') && key.includes('weatherData')) {
-        this.cache.delete(key);
-      }
-    });
+    // Limpar cache de weather data quando há mudanças
+    if (endpoint.includes('weatherData') || endpoint === 'weather-data') {
+      this.cache.delete('GET_weather-data');
+      this.cache.delete(`GET_${API_ENDPOINTS.WEATHER_DATA}`);
+      console.log('🗑️ Weather data cache invalidated');
+    }
   }
 
   private getUserErrorMessage(error: any): string {

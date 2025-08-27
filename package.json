@@ -27,7 +27,7 @@
   "dependencies": {
     "@angular/animations": "^20.2.1",
     "@angular/cdk": "^20.2.0",
-    "@angular/common": "^20.2.0",
+    "@angular/common": "^20.2.1",
     "@angular/compiler": "^20.2.0",
     "@angular/core": "^20.2.0",
     "@angular/forms": "^20.2.0",
@@ -41,6 +41,7 @@
     "@ngrx/store-devtools": "^20.0.0",
     "chart.js": "^4.5.0",
     "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "ng2-charts": "^8.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

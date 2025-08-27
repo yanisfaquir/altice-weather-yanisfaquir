@@ -2,10 +2,10 @@
   <!-- Header -->
   <div class="text-center mb-8">
     <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-      🌤️ Add Weather Data
+      🌤️ {{ 'weather.form.title' | translate }}
     </h2>
     <p class="text-gray-600 dark:text-gray-300">
-      Collect weather information and its impact on communications
+      {{ 'weather.form.description' | translate }}
     </p>
   </div>
 
@@ -15,71 +15,63 @@
     <!-- City -->
     <div class="space-y-2">
       <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        🏙️ City *
+        🏙️ {{ 'weather.form.city' | translate }} *
       </label>
       <input
         id="city"
         type="text"
         formControlName="city"
-        placeholder="Enter city name (e.g., Aveiro, Porto)"
+        [placeholder]="'weather.form.cityPlaceholder' | translate"
         class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
                bg-white/50 dark:bg-gray-800/50 
                focus:ring-2 focus:ring-blue-500 focus:border-transparent
                placeholder-gray-500 dark:placeholder-gray-400
                transition-all duration-200"
       >
-      @if (weatherForm.get('city')?.invalid && weatherForm.get('city')?.touched) {
-        <div class="text-red-500 text-sm">
-          City is required
+      <div *ngIf="weatherForm.get('city')?.errors && weatherForm.get('city')?.touched" 
+           class="text-red-500 text-sm">
+        <div *ngIf="weatherForm.get('city')?.errors?.['required']">
+          {{ 'weather.form.validation.cityRequired' | translate }}
         </div>
-}
+      </div>
     </div>
 
     <!-- Temperature -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="space-y-2">
-        <label for="temperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          🌡️ Temperature *
-        </label>
+    <div class="space-y-2">
+      <label for="temperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        🌡️ {{ 'weather.form.temperature' | translate }} ({{ getCurrentTemperatureUnit() }})
+      </label>
+      <div class="relative">
         <input
           id="temperature"
           type="number"
           formControlName="temperature"
-          placeholder="25.5"
+          [placeholder]="getTemperaturePlaceholder()"
           step="0.1"
           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
                  bg-white/50 dark:bg-gray-800/50 
                  focus:ring-2 focus:ring-blue-500 focus:border-transparent
                  transition-all duration-200"
         >
-        <div *ngIf="weatherForm.get('temperature')?.invalid && weatherForm.get('temperature')?.touched" 
-             class="text-red-500 text-sm">
-          Temperature is required
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+          <span class="text-gray-500 text-sm">{{ getCurrentTemperatureSymbol() }}</span>
         </div>
       </div>
-      
-      <div class="space-y-2">
-        <label for="temperatureUnit" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Unit
-        </label>
-        <select
-          id="temperatureUnit"
-          formControlName="temperatureUnit"
-          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
-                 bg-white/50 dark:bg-gray-800/50 
-                 focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                 transition-all duration-200"
-        >
-          <option value="celsius">°C (Celsius)</option>
-          <option value="fahrenheit">°F (Fahrenheit)</option>
-        </select>
+      <div *ngIf="weatherForm.get('temperature')?.errors && weatherForm.get('temperature')?.touched" 
+           class="text-red-500 text-sm">
+        <div *ngIf="weatherForm.get('temperature')?.errors?.['required']">
+          {{ 'weather.form.validation.temperatureRequired' | translate }}
+        </div>
+      </div>
+      <div class="mt-1 text-xs text-gray-500">
+        {{ 'weather.form.temperatureHelper' | translate: getTemperatureConversionExample() }}
       </div>
     </div>
 
     <!-- Date -->
     <div class="space-y-2">
       <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        📅 Date *
+        <!-- 📅 {{ 'weather.form.date' | translate }} * -->
       </label>
       <input
         id="date"
@@ -92,14 +84,14 @@
       >
       <div *ngIf="weatherForm.get('date')?.invalid && weatherForm.get('date')?.touched" 
            class="text-red-500 text-sm">
-        Date is required
+        <!-- {{ 'weather.form.validation.dateRequired' | translate }} -->
       </div>
     </div>
 
-    <!-- Raining Status -->
+    <!-- Raining -->
     <div class="space-y-2">
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        🌧️ Raining Status
+        🌧️ {{ 'weather.form.raining' | translate }}
       </label>
       <div class="flex space-x-4">
         <label class="flex items-center">
@@ -109,7 +101,9 @@
             [value]="false"
             class="mr-2 text-blue-600 focus:ring-blue-500"
           >
-          <span class="text-gray-700 dark:text-gray-300">☀️ Not Raining</span>
+          <span class="text-gray-700 dark:text-gray-300">☀️ </span>
+          <!-- <span class="text-gray-700 dark:text-gray-300">☀️ {{ 'weather.form.notRaining' | translate }}</span> -->
+
         </label>
         <label class="flex items-center">
           <input
@@ -118,7 +112,9 @@
             [value]="true"
             class="mr-2 text-blue-600 focus:ring-blue-500"
           >
-          <span class="text-gray-700 dark:text-gray-300">🌧️ Raining</span>
+          <!-- <span class="text-gray-700 dark:text-gray-300">🌧️ {{ 'weather.form.rainingNow' | translate }}</span> -->
+          <span class="text-gray-700 dark:text-gray-300">🌧️</span>
+
         </label>
       </div>
     </div>
@@ -126,7 +122,7 @@
     <!-- Network Power -->
     <div class="space-y-2">
       <label for="networkPower" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        📶 Network Power (1-5) *
+        📶 {{ 'weather.form.networkPower' | translate }} *
       </label>
       <select
         id="networkPower"
@@ -136,57 +132,56 @@
                focus:ring-2 focus:ring-blue-500 focus:border-transparent
                transition-all duration-200"
       >
-        <option value="">Select network power</option>
-        <option value="1">1 - {{ networkPowerLabels[1] }}</option>
-        <option value="2">2 - {{ networkPowerLabels[2] }}</option>
-        <option value="3">3 - {{ networkPowerLabels[3] }}</option>
-        <option value="4">4 - {{ networkPowerLabels[4] }}</option>
-        <option value="5">5 - {{ networkPowerLabels[5] }}</option>
+        <option value="">{{ 'weather.form.selectNetworkPower' | translate }}</option>
+        <option value="1">1 - {{ 'weather.form.networkPower.critical' | translate }}</option>
+        <option value="2">2 - {{ 'weather.form.networkPower.poor' | translate }}</option>
+        <option value="3">3 - {{ 'weather.form.networkPower.average' | translate }}</option>
+        <option value="4">4 - {{ 'weather.form.networkPower.good' | translate }}</option>
+        <option value="5">5 - {{ 'weather.form.networkPower.excellent' | translate }}</option>
       </select>
       <div *ngIf="weatherForm.get('networkPower')?.invalid && weatherForm.get('networkPower')?.touched" 
            class="text-red-500 text-sm">
-        Network power is required
+        {{ 'weather.form.validation.networkPowerRequired' | translate }}
       </div>
     </div>
 
     <!-- Altitude -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="space-y-2">
-        <label for="altitude" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          ⛰️ Altitude *
-        </label>
+    <div class="space-y-2">
+      <label for="altitude" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        ⛰️ {{ 'weather.form.altitude' | translate }} ({{ getCurrentAltitudeUnit() }})
+      </label>
+      <div class="relative">
         <input
           id="altitude"
           type="number"
           formControlName="altitude"
-          placeholder="100"
+          [placeholder]="getAltitudePlaceholder()"
           step="1"
           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
                  bg-white/50 dark:bg-gray-800/50 
                  focus:ring-2 focus:ring-blue-500 focus:border-transparent
                  transition-all duration-200"
         >
-        <div *ngIf="weatherForm.get('altitude')?.invalid && weatherForm.get('altitude')?.touched" 
-             class="text-red-500 text-sm">
-          Altitude is required
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+          <span class="text-gray-500 text-sm">{{ getCurrentAltitudeSymbol() }}</span>
         </div>
       </div>
-      
-      <div class="space-y-2">
-        <label for="altitudeUnit" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Unit
-        </label>
-        <select
-          id="altitudeUnit"
-          formControlName="altitudeUnit"
-          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
-                 bg-white/50 dark:bg-gray-800/50 
-                 focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                 transition-all duration-200"
-        >
-          <option value="meters">Meters (m)</option>
-          <option value="feet">Feet (ft)</option>
-        </select>
+      <div *ngIf="weatherForm.get('altitude')?.errors && weatherForm.get('altitude')?.touched" 
+           class="text-red-500 text-sm">
+        {{ 'weather.form.validation.altitudeRequired' | translate }}
+      </div>
+    </div>
+
+    <!-- Current Settings Info -->
+    <div class="mt-8 glass rounded-xl p-4">
+      <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+        <div class="font-medium mb-2">{{ 'weather.form.currentSettings' | translate }}:</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <div>{{ 'settings.currentLanguage' | translate }}: {{ getCurrentLanguageName() }}</div>
+          <div>{{ 'settings.temperatureUnit' | translate }}: {{ getCurrentTemperatureUnit() }}</div>
+          <div>{{ 'settings.currentTimezone' | translate }}: {{ getCurrentTimezoneName() }}</div>
+          <div>{{ 'weather.form.currentTime' | translate }}: {{ getCurrentTime() }}</div>
+        </div>
       </div>
     </div>
 
@@ -198,7 +193,7 @@
         class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-lg
                transition-all duration-200 transform hover:scale-105"
       >
-        🔄 Reset
+        🔄 {{ 'common.reset' | translate }}
       </button>
       <button
         type="submit"
@@ -210,28 +205,17 @@
                transition-all duration-200 transform hover:scale-105
                disabled:transform-none disabled:cursor-not-allowed"
       >
-        <span *ngIf="!isSubmitting()">💾 Save Weather Data</span>
+        <span *ngIf="!isSubmitting()">💾 {{ 'weather.form.submit' | translate }}</span>
         <span *ngIf="isSubmitting()" class="flex items-center">
-          
           <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          Saving...
+          {{ 'common.submitting' | translate }}
         </span>
       </button>
     </div>
 
-    <!-- Success/Error Messages -->
-    @if (message()) {
-      <div class="p-4 rounded-lg mt-4"
-           [class.bg-green-100]="message()?.type === 'success'"
-           [class.text-green-700]="message()?.type === 'success'"
-           [class.bg-red-100]="message()?.type === 'error'"
-           [class.text-red-700]="message()?.type === 'error'">
-        {{ message()?.text }}
-      </div>
-    }
 
   </form>
 </div>

@@ -1,102 +1,130 @@
-/* Settings Panel Styles */
+// src/app/features/settings/components/settings-panel/settings-panel.scss
 
 .toggle-checkbox {
-  @apply relative w-11 h-6 bg-gray-200 rounded-full cursor-pointer;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500;
-  transition: background-color 0.2s;
-
-  &:checked {
-    @apply bg-blue-600;
-  }
-
-  &::before {
+  appearance: none;
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  background-color: #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  
+  &:before {
     content: '';
-    @apply absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full;
-    transition: transform 0.2s;
+    position: absolute;
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-
-  &:checked::before {
-    transform: translateX(1.25rem);
-  }
-}
-
-/* Theme selection buttons */
-.theme-button {
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  &.active {
-    @apply ring-2 ring-blue-500 bg-blue-50;
-  }
-}
-
-/* Radio button custom styling */
-input[type="radio"] {
-  @apply w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500;
   
   &:checked {
-    @apply bg-blue-600 border-blue-600;
+    background-color: #3b82f6;
+    
+    &:before {
+      transform: translateX(1.5rem);
+    }
   }
-}
-
-/* Select dropdown styling */
-select {
-  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23666' d='M2 0L0 2h4L2 0zM2 5L0 3h4L2 5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 12px;
-  appearance: none;
   
   &:focus {
-    @apply outline-none ring-2 ring-blue-500;
+    ring: 2px;
+    ring-color: #3b82f6;
+    ring-opacity: 0.5;
+  }
+  
+  &:hover {
+    background-color: #9ca3af;
+    
+    &:checked {
+      background-color: #2563eb;
+    }
   }
 }
 
-/* Modal animations */
-.modal-backdrop {
-  backdrop-filter: blur(4px);
+.dark .toggle-checkbox {
+  background-color: #4b5563;
+  
+  &:before {
+    background-color: #f9fafb;
+  }
+  
+  &:checked {
+    background-color: #3b82f6;
+  }
+  
+  &:hover {
+    background-color: #6b7280;
+    
+    &:checked {
+      background-color: #2563eb;
+    }
+  }
+}
+
+// Glass effect specific to settings panel
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  .dark & {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Smooth transitions for settings changes
+.settings-section {
+  transition: all 0.3s ease-in-out;
+}
+
+// Better mobile responsiveness
+@media (max-width: 768px) {
+  .glass {
+    margin: 0.5rem;
+    padding: 1rem !important;
+  }
+  
+  .grid-cols-1.md\\:grid-cols-2,
+  .grid-cols-1.md\\:grid-cols-3 {
+    gap: 1rem;
+  }
+}
+
+// Animation for modal overlay
+.modal-overlay {
   animation: fadeIn 0.2s ease-out;
 }
 
-.modal-content {
-  animation: slideUp 0.3s ease-out;
-}
-
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-/* Form sections */
-.form-section {
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  }
+// Animation for modal content
+.modal-content {
+  animation: slideInFromBottom 0.3s ease-out;
 }
 
-/* Notification settings disabled state */
-.notification-disabled {
-  @apply opacity-50 pointer-events-none;
-  
-  input[type="checkbox"] {
-    @apply cursor-not-allowed;
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

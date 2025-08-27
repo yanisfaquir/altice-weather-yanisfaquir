@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { CityDetailsService, CityDetail } from '../../../city-details/service/city-details.service';
 import { WeatherData } from '../../../../core/models/weather-data.model';
 import { NetworkPowerLabels } from '../../../../core/models/weather.enums';
+import { TranslatePipe } from "../../../../shared/pipes/translate.pipe";
 
 
 @Component({
   selector: 'app-city-overview',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './city-overview.html',
   styleUrls: ['./city-overview.scss']
 })
