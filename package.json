@@ -9,7 +9,13 @@
     "test": "ng test",
     "extract": "ng extract-i18n",
     "build:pt": "ng build --configuration=pt",
-    "serve:pt": "ng serve --configuration=pt"
+    "serve:pt": "ng serve --configuration=pt", 
+    "build:prod": "ng build --configuration production",
+    "docker:build": "./docker-run.sh build",
+    "docker:start": "./docker-run.sh start",
+    "docker:dev": "docker-compose --profile dev up --build",
+    "docker:stop": "./docker-run.sh stop",
+    "docker:clean": "./docker-run.sh clean"
   },
   "prettier": {
     "printWidth": 100,
