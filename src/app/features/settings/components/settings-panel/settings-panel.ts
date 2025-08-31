@@ -77,6 +77,10 @@ export class SettingsPanel implements OnInit {
     return this.settingsService.formatDate(new Date());
   });
 
+  setLocale(locale: string): void {
+  this.i18nService.setLocale(locale);
+}
+
   // Helper methods for template
   getAvailableLanguages() {
     return this.i18nService.getSupportedLocales();
@@ -176,9 +180,22 @@ export class SettingsPanel implements OnInit {
     }
   }
 
+// Modificar o método existente onLanguageSelectChange para usar setLocale
   onLanguageSelectChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
-    this.onLanguageChange(target.value);
+    const languageCode = target.value;
+    
+    this.setLocale(languageCode);
+    
+    const languageMap: Record<string, Language> = {
+      'pt': Language.PT,
+      'en': Language.EN,
+    };
+    
+    const language = languageMap[languageCode];
+    if (language) {
+      this.settingsService.updateLanguage(language);
+    }
   }
 
   onTimezoneSelectChange(event: Event): void {

@@ -51,9 +51,6 @@ export class App implements OnInit {
   readonly currentSettings = this.settingsService.settings;
   readonly currentTime = signal(new Date());
 
-  setLocale(locale: string) {
-  this.i18nService.setLocale(locale);
-}
 
   
   // Estado único para controlar qual view está ativa
