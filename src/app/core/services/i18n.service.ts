@@ -255,7 +255,7 @@ const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
     'cities.critical': 'Crítico',
     
     'settings.title': 'Configurações',
-    'settings.appearance': 'Aparência',
+    'settings.appearance': 'Tema',
     'settings.theme': 'Tema',
     'settings.language': 'Idioma',
     'settings.timezone': 'Fuso Horário',
@@ -347,6 +347,12 @@ const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
     'cities.have': 'tem', 
     'settings.currentLanguage': 'Idioma',
     'settings.currentTimezone': 'Timezone atual',
+    'settings.temperatureDisplay': 'Temperatura',
+    'settings.currentTheme': 'Tema',
+    'settings.timezoneOffset': 'Timezone',
+    'settings.sampleDate': 'Exemplo da data',
+    'settings.systemInfo': 'Informações do sistema', 
+    'settings.languageRegion': 'Lingagem e Região',
 
   },
   
