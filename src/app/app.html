@@ -11,44 +11,41 @@
   <div class="flex flex-wrap gap-4 mb-8">
     <button (click)="toggleWeatherForm()" [class]="getWeatherFormButtonClass()">
       @if (isWeatherFormActive) {
-        <span class="flex items-center">✅ <span class="ml-2" i18n="@@btn-add-weather-active">Add Weather Data</span></span>
+        <span class="flex items-center"> <span class="ml-2">{{ 'btn.add.weather.active' | translate }}</span></span>
       } @else {
-        <span i18n="@@btn-add-weather">📊 Add Weather Data</span>
+        <span>{{ 'btn.add.weather' | translate }}</span>
       }
     </button>
     
     <button (click)="toggleCityList()" [class]="getCityListButtonClass()">
       @if (isCityListActive) {
-        <span class="flex items-center">✅ <span class="ml-2" i18n="@@btn-view-cities-active">View Cities</span></span>
+        <span class="flex items-center"><span class="ml-2">{{ 'btn.view.cities.active' | translate }}</span></span>
       } @else {
-        <span i18n="@@btn-view-cities">🏙️ View Cities</span>
+        <span>{{ 'btn.view.cities' | translate }}</span>
       }
     </button>
 
     <button (click)="toggleSettings()" [class]="getSettingsButtonClass()">
       @if (isSettingsActive) {
-        <span class="flex items-center">✅ <span class="ml-2" i18n="@@btn-settings-active">Settings</span></span>
+        <span class="flex items-center"><span class="ml-2">{{ 'btn.settings.active' | translate }}</span></span>
       } @else {
-        <span i18n="@@btn-settings">⚙️ Settings</span>
+        <span>{{ 'btn.settings' | translate }}</span>
       }
     </button>
   </div>
 
-
-
-
   <!-- Views -->
   @if (isCityListActive) { <app-city-list></app-city-list> }
- @if (isWeatherFormActive) { 
-  <app-weather-form (dataAdded)="onDataAdded()"></app-weather-form> 
-}
+  @if (isWeatherFormActive) { 
+    <app-weather-form (dataAdded)="onDataAdded()"></app-weather-form> 
+  }
   @if (activeView === 'none') {
     <div class="glass rounded-2xl p-8 text-center">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@ready-to-start">🚀 Ready to Start!</h2>
-      <p class="text-gray-600 dark:text-gray-300" i18n="@@choose-option-text">
-        Choose an option above to get started:
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">{{ 'ready-to-start' | translate }}</h2>
+      <p class="text-gray-600 dark:text-gray-300">
+        {{ 'choose-option-text-part1' | translate }}
         <br>
-        <strong>Add Weather Data</strong> to collect new information or <strong>View Cities</strong> to see the dashboard.
+        <strong>{{ 'choose-option-text-add-weather' | translate }}</strong> {{ 'choose-option-text-part2' | translate }} <strong>{{ 'choose-option-text-view-cities' | translate }}</strong> {{ 'choose-option-text-part3' | translate }}
       </p>
     </div>
   }

@@ -25,7 +25,8 @@ import { TranslatePipe} from '../../../../shared/pipes/translate.pipe';
   imports: [
     CommonModule, 
     FormsModule, 
-    TranslatePipe,
+    TranslatePipe
+ 
   ],
   templateUrl: './settings-panel.html',
   styleUrls: ['./settings-panel.scss']
