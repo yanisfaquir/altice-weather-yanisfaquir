@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
 
@@ -11,5 +11,5 @@ import { Footer } from '../footer/footer';
   styleUrls: ['./main-layout.scss']
 })
 export class MainLayoutComponent {
-  @Input() title = '';
+
 }

@@ -59,6 +59,7 @@ export class CityDetailsService {
     );
   }
 
+  //Extração dos dados 
   private processCityDetails(cityName: string, data: WeatherData[]): CityDetail {
     const temperatures = data.map(d => d.temperature);
     const networkPowers = data.map(d => d.networkPower);
