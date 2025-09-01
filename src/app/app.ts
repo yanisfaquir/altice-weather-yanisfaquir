@@ -13,6 +13,7 @@ import { DashboardWelcomeCardComponent } from '../app/features/dashboard/compone
 import { I18nService } from './core/services/i18n.service';
 import { SettingsService } from './features/settings/components/services/settings.service';
 import { TimezoneService } from './core/services/timezone.service';
+import { TranslatePipe} from '../app/shared/pipes/translate.pipe';
 
 
 type ActiveView = 'none' | 'weatherForm' | 'cityList' | 'settings';
@@ -27,6 +28,7 @@ type ActiveView = 'none' | 'weatherForm' | 'cityList' | 'settings';
     SettingsPanel, 
     MainLayoutComponent, 
     DashboardWelcomeCardComponent,
+    TranslatePipe
 
   ],
   templateUrl: './app.html',
@@ -51,9 +53,6 @@ export class App implements OnInit {
   readonly currentSettings = this.settingsService.settings;
   readonly currentTime = signal(new Date());
 
-  setLocale(locale: string) {
-  this.i18nService.setLocale(locale);
-}
 
   
   // Estado único para controlar qual view está ativa

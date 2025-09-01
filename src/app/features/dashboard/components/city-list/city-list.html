@@ -3,10 +3,10 @@
   <div class="flex justify-between items-center mb-8">
     <div>
       <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-        🏙️ Cities Dashboard
+        🏙️ {{ 'cities.title' | translate }}
       </h2>
       <p class="text-gray-600 dark:text-gray-300">
-        Monitor weather conditions and network performance across cities
+        {{ 'cities.description' | translate }}
       </p>
     </div>
     
@@ -20,9 +20,9 @@
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        Loading...
+        {{ 'common.loading' | translate }}
       } @else {
-        🔄 Refresh
+        🔄 {{ 'common.refresh' | translate }}
       }
     </button>
   </div>
@@ -31,7 +31,7 @@
   @if (isLoading()) {
     <div class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      <p class="mt-4 text-gray-600 dark:text-gray-300">Loading dashboard data...</p>
+      <p class="mt-4 text-gray-600 dark:text-gray-300">{{ 'common.loading' | translate }}...</p>
     </div>
   }
 
@@ -39,12 +39,12 @@
   @if (error()) {
     <div class="glass rounded-2xl p-8 text-center">
       <div class="text-6xl mb-4">⚠️</div>
-      <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Error Loading Data</h3>
+      <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">{{ 'status.error' | translate }}</h3>
       <p class="text-gray-600 dark:text-gray-300 mb-4">{{ error() }}</p>
       <button 
         (click)="refreshData()"
         class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
-        Try Again
+        {{ 'try.again.button' | translate }}
       </button>
     </div>
   }
@@ -61,7 +61,7 @@
               <span class="text-2xl">🏙️</span>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Cities</p>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ 'cities.totalCities' | translate }}</p>
               <p class="text-2xl font-bold text-gray-800 dark:text-white">
                 {{ dashboardData()!.totalCities }}
               </p>
@@ -75,7 +75,7 @@
               <span class="text-2xl">📊</span>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Records</p>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ 'cities.totalRecords' | translate }}</p>
               <p class="text-2xl font-bold text-gray-800 dark:text-white">
                 {{ dashboardData()!.totalRecords }}
               </p>
@@ -89,7 +89,7 @@
               <span class="text-2xl">🌡️</span>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Avg Temperature</p>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ 'cities.averageTemp' | translate }}</p>
               <p class="text-2xl font-bold text-gray-800 dark:text-white">
                {{ formatTemperature(dashboardData()!.averageTemperature) }}
               </p>
@@ -103,7 +103,7 @@
               <span class="text-2xl">📶</span>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Avg Network Power</p>
+              <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ 'stats.avgNetworkPower' | translate }}</p>
               <p class="text-2xl font-bold text-gray-800 dark:text-white">
                 {{ dashboardData()!.averageNetworkPower }}/5
               </p>
@@ -118,11 +118,13 @@
           <div class="flex items-center">
             <span class="text-2xl mr-3">🚨</span>
             <div>
-              <h4 class="font-bold text-red-800 dark:text-red-300">Network Alert</h4>
+              <h4 class="font-bold text-red-800 dark:text-red-300">  {{ 'cities.NetworkAlert' | translate }}</h4>
               <p class="text-red-600 dark:text-red-400">
                 {{ dashboardData()!.citiesWithPoorNetwork }} 
-                {{ dashboardData()!.citiesWithPoorNetwork === 1 ? 'city has' : 'cities have' }} 
-                poor network performance (≤ 2/5)
+                <!-- {{ dashboardData()!.citiesWithPoorNetwork === 1 ? '' : 'cities have' }}  -->
+                  {{ dashboardData()!.citiesWithPoorNetwork === 1 ? ('cities.has' | translate)  : ('cities.have' | translate) }}
+
+                {{ 'cities.poorNetworkPerformance' | translate }}
               </p>
             </div>
           </div>
@@ -133,7 +135,7 @@
       @if (dashboardData()!.cities.length > 0) {
         <div class="glass rounded-2xl p-8">
           <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">
-            Cities Overview
+            {{ 'cities.overview' | translate }}
           </h3>
           
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -155,36 +157,35 @@
                 <div class="grid grid-cols-2 gap-4 mb-4">
                   <div class="text-center">
                     <p class="text-2xl font-bold text-blue-600">{{ city.totalRecords }}</p>
-                    <p class="text-xs text-gray-500">Records</p>
+                    <p class="text-xs text-gray-500">{{ 'cities.records' | translate }}</p>
                   </div>
                   <div class="text-center">
                     <p class="text-2xl font-bold text-green-600">{{ formatTemperature(city.averageTemperature) }}</p>
-
-                    <p class="text-xs text-gray-500">Avg Temp</p>
+                    <p class="text-xs text-gray-500">{{ 'cities.averageTemp' | translate }}</p>
                   </div>
                   <div class="text-center">
                     <p class="text-2xl font-bold {{ getNetworkPowerColor(city.averageNetworkPower) }}">
                       {{ city.averageNetworkPower }}/5
                     </p>
-                    <p class="text-xs text-gray-500">Network</p>
+                    <p class="text-xs text-gray-500">{{ 'cities.networkPower' | translate }}</p>
                   </div>
                   <div class="text-center">
                     <p class="text-2xl font-bold text-purple-600">{{ city.rainyDaysPercentage }}%</p>
-                    <p class="text-xs text-gray-500">Rainy Days</p>
+                    <p class="text-xs text-gray-500"> {{ 'cities.RainyDays' | translate }}</p>
                   </div>
                 </div>
 
                 <!-- Actions -->
                 <div class="border-t border-gray-200 dark:border-gray-600 pt-4">
                   <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300 mb-3">
-                    <span>Altitude: {{ city.averageAltitude }}m</span>
-                    <span>Updated: {{ formatDate(city.lastUpdate) }}</span>
+                    <span>{{ 'cities.altitude' | translate }}: {{ city.averageAltitude }}m</span>
+                    <span>{{ 'cities.lastUpdate' | translate }}: {{ formatDate(city.lastUpdate) }}</span>
                   </div>
                   
                   @if (city.worstNetworkPower <= 2) {
                     <div class="mb-3 flex items-center text-sm text-red-600">
                       <span class="mr-1">🚨</span>
-                      Worst network power: {{ city.worstNetworkPower }}/5
+                       {{ 'cities.worstPower' | translate }} {{ city.worstNetworkPower }}/5
                     </div>
                   }
 
@@ -193,7 +194,7 @@
                     (click)="viewCityDetails(city.cityName)"
                     class="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
                            transition-colors text-sm font-medium">
-                     View Details
+                     {{ 'cities.viewDetails' | translate }}
                   </button>
                 </div>
               </div>
@@ -205,22 +206,19 @@
         <div class="glass rounded-2xl p-12 text-center">
           <div class="text-6xl mb-6">🏙️</div>
           <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-            No Cities Data Available
+            {{ 'cities.noCities' | translate }}
           </h3>
           <p class="text-gray-600 dark:text-gray-300 mb-6">
-            Start by adding some weather data to see cities appear here.
+            {{ 'cities.noCitiesDesc' | translate }}
           </p>
           <button 
             (click)="refreshData()"
             class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
                    transition-colors transform hover:scale-105">
-            🔄 Refresh Data
+            🔄 {{ 'common.refresh' | translate }}
           </button>
         </div>
       }
-
-
-
     </div>
   }
 
@@ -234,7 +232,7 @@
         <!-- Close Button -->
         <div class="sticky top-0 bg-white dark:bg-gray-900 p-4 border-b border-gray-200 dark:border-gray-700 
                     flex justify-between items-center z-10">
-          <h2 class="text-xl font-bold text-gray-800 dark:text-white">City Details</h2>
+          <h2 class="text-xl font-bold text-gray-800 dark:text-white">{{ 'cities.title' | translate }}</h2>
           <button 
             (click)="closeCityDetails()"
             class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
@@ -249,5 +247,4 @@
       </div>
     </div>
   }
-
 </div>

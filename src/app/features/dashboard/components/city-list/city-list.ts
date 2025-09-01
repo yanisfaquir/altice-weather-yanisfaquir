@@ -6,12 +6,12 @@ import { DashboardService, CityOverview, DashboardSummary } from '../../services
 import { I18nService } from '../../../../core/services/i18n.service';
 import { SettingsService } from '../../../../features/settings/components/services/settings.service';
 import { TimezoneService } from '../../../../core/services/timezone.service';
-import { TranslatePipe, LocalizedDatePipe } from '../../../../shared/pipes/translate.pipe';
+import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import {CityOverviewComponent} from '../../../../features/city-details/components/city-overview/city-overview'
 @Component({
   selector: 'app-city-list',
   standalone: true,
-  imports: [CommonModule, CityOverviewComponent],
+  imports: [CommonModule, CityOverviewComponent, TranslatePipe],
   templateUrl: './city-list.html',
   styleUrls: ['./city-list.scss']
 })
