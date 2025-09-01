@@ -4,7 +4,7 @@
   @if (isLoading()) {
     <div class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      <p class="mt-4 text-gray-600 dark:text-gray-300" i18n="@@loading-city-details">Loading city details...</p>
+      <p class="mt-4 text-gray-600 dark:text-gray-300">{{ 'loading.city.details' | translate }}</p>
     </div>
   }
 
@@ -12,13 +12,12 @@
   @if (error()) {
     <div class="glass rounded-2xl p-8 text-center">
       <div class="text-6xl mb-4">⚠️</div>
-      <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2" i18n="@@error-loading-city">Error Loading City Details</h3>
+      <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">{{ 'error.loading.city' | translate }}</h3>
       <p class="text-gray-600 dark:text-gray-300 mb-4">{{ error() }}</p>
       <button 
         (click)="refresh()"
-        class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
-        i18n="@@try-again-button">
-        Try Again
+        class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+        {{ 'try.again.button' | translate }}
       </button>
     </div>
   }
@@ -34,15 +33,14 @@
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
               🏙️ {{ cityDetails()!.cityName }}
             </h1>
-            <p class="text-gray-600 dark:text-gray-300" i18n="@@detailed-analysis-subtitle">
-              Detailed weather and network analysis
+            <p class="text-gray-600 dark:text-gray-300">
+              {{ 'detailed.analysis.subtitle' | translate }}
             </p>
           </div>
           <button 
             (click)="refresh()"
-            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
-            i18n="@@refresh-button">
-            🔄 Refresh
+            class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+            🔄 {{ 'common.refresh' | translate }}
           </button>
         </div>
 
@@ -50,21 +48,21 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div class="text-center">
             <div class="text-2xl font-bold text-blue-600">{{ cityDetails()!.totalRecords }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400" i18n="@@total-records">Total Records</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">{{ 'total.records' | translate }}</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-green-600">{{ cityDetails()!.averageTemperature.toFixed(1) }}°C</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400" i18n="@@avg-temperature">Avg Temperature</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">{{ 'avg.temperature' | translate }}</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold {{ getNetworkPowerColor(cityDetails()!.averageNetworkPower) }}">
               {{ cityDetails()!.averageNetworkPower.toFixed(1) }}/5
             </div>
-            <div class="text-sm text-gray-600 dark:text-gray-400" i18n="@@avg-network-power">Avg Network Power</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">{{ 'avg.network.power' | translate }}</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-purple-600">{{ cityDetails()!.averageAltitude.toFixed(0) }}m</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400" i18n="@@avg-altitude">Avg Altitude</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">{{ 'avg.altitude' | translate }}</div>
           </div>
         </div>
       </div>
@@ -74,20 +72,20 @@
         
         <!-- Temperature Info -->
         <div class="glass rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@temperature-analysis">
-            🌡️ Temperature Analysis
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+            🌡️ {{ 'temperature.analysis' | translate }}
           </h3>
           
           <div class="space-y-4">
             <div class="flex justify-between items-center">
-              <span class="text-gray-600 dark:text-gray-300" i18n="@@temperature-range">Range:</span>
+              <span class="text-gray-600 dark:text-gray-300">{{ 'temperature.range' | translate }}:</span>
               <span class="font-bold text-gray-800 dark:text-white">
                 {{ cityDetails()!.temperatureRange.min.toFixed(1) }}°C - {{ cityDetails()!.temperatureRange.max.toFixed(1) }}°C
               </span>
             </div>
             
             <div class="flex justify-between items-center">
-              <span class="text-gray-600 dark:text-gray-300" i18n="@@temperature-trend">Trend:</span>
+              <span class="text-gray-600 dark:text-gray-300">{{ 'temperature.trend' | translate }}:</span>
               <span class="flex items-center {{ getTrendColor(cityDetails()!.temperatureTrend) }} font-bold">
                 {{ getTrendIcon(cityDetails()!.temperatureTrend) }} 
                 <span class="ml-2">{{ cityDetails()!.temperatureTrend | titlecase }}</span>
@@ -98,8 +96,8 @@
 
         <!-- Network Distribution -->
         <div class="glass rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4" i18n="@@network-power-distribution">
-            📶 Network Power Distribution
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+            📶 {{ 'network.power.distribution' | translate }}
           </h3>
           
           <div class="space-y-3">
@@ -128,19 +126,19 @@
       <!-- Monthly Data -->
       @if (cityDetails()!.monthlyData.length > 0) {
         <div class="glass rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6" i18n="@@monthly-analysis">
-            📅 Monthly Analysis
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">
+            📅 {{ 'monthly.analysis' | translate }}
           </h3>
           
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead>
                 <tr class="border-b border-gray-200 dark:border-gray-600">
-                  <th class="text-left py-2 px-4 font-semibold text-gray-700 dark:text-gray-300" i18n="@@table-month">Month</th>
-                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300" i18n="@@table-records">Records</th>
-                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300" i18n="@@table-avg-temp">Avg Temp</th>
-                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300" i18n="@@table-avg-network">Avg Network</th>
-                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300" i18n="@@table-rainy-days">Rainy Days</th>
+                  <th class="text-left py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">{{ 'table.month' | translate }}</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">{{ 'table.records' | translate }}</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">{{ 'table.avg.temp' | translate }}</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">{{ 'table.avg.network' | translate }}</th>
+                  <th class="text-center py-2 px-4 font-semibold text-gray-700 dark:text-gray-300">{{ 'table.rainy.days' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -172,8 +170,8 @@
       <!-- Worst Records -->
       @if (cityDetails()!.worstRecords.length > 0) {
         <div class="glass rounded-2xl p-6 bg-red-50/50 border-l-4 border-red-500">
-          <h3 class="text-xl font-bold text-red-800 dark:text-red-300 mb-6 flex items-center" i18n="@@worst-performance-records">
-            🚨 Worst Network Performance Records
+          <h3 class="text-xl font-bold text-red-800 dark:text-red-300 mb-6 flex items-center">
+            🚨 {{ 'worst.performance.records' | translate }}
           </h3>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -188,15 +186,15 @@
                 
                 <div class="grid grid-cols-2 gap-2 text-sm">
                   <div>
-                    <span class="text-gray-600" i18n="@@temp-label">Temp:</span>
+                    <span class="text-gray-600">{{ 'temp.label' | translate }}:</span>
                     <span class="font-bold ml-1">{{ record.temperature }}°C</span>
                   </div>
                   <div>
-                    <span class="text-gray-600" i18n="@@altitude-label">Altitude:</span>
+                    <span class="text-gray-600">{{ 'altitude.label' | translate }}:</span>
                     <span class="font-bold ml-1">{{ record.altitude }}m</span>
                   </div>
                   <div>
-                    <span class="text-gray-600" i18n="@@rain-label">Rain:</span>
+                    <span class="text-gray-600">{{ 'rain.label' | translate }}:</span>
                     <span class="font-bold ml-1">{{ record.isRaining ? '🌧️ Yes' : '☀️ No' }}</span>
                   </div>
                 </div>
@@ -209,8 +207,8 @@
       <!-- Recent Records -->
       @if (cityDetails()!.recentRecords.length > 0) {
         <div class="glass rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6" i18n="@@recent-records">
-            🕒 Recent Records
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6">
+            🕒 {{ 'recent.records' | translate }}
           </h3>
           
           <div class="space-y-3">
@@ -225,10 +223,8 @@
                       {{ record.networkPower }}/5
                     </span>
                     <span>{{ record.isRaining ? '🌧️' : '☀️' }}</span>
-
                   </div>
                 </div>
-             
               </div>
             }
           </div>

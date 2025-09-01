@@ -63,7 +63,7 @@ export interface TranslationKeys {
   'weather.form.validation.altitudeRequired': string;
   'weather.form.validation.altitudeRange': string;
   
-  // Cities
+
   'cities.title': string;
   'cities.overview': string;
   'cities.description': string;
@@ -88,6 +88,7 @@ export interface TranslationKeys {
   'cities.average': string;
   'cities.poor': string;
   'cities.critical': string;
+  'cities.worstPower': string; 
   
 
   'settings.title': string;
@@ -132,6 +133,13 @@ export interface TranslationKeys {
   'units.fahrenheit': string;
   'units.meters': string;
   'units.feet': string;
+
+  'network.alert': string;
+  'network.alert.city.singular': string;
+  'network.alert.city.plural': string; 
+  'network.alert.poor.performance': string;
+  'network.worst.power': string;
+  'weather.rainy.days': string;
   
 
   'status.online': string;
@@ -181,6 +189,15 @@ export interface TranslationKeys {
   'choose-option-text-part2': string;
   'choose-option-text-view-cities': string;
   'choose-option-text-part3': string;
+  'common.refresh': string;
+  'cities.RainyDays': string, 
+  'cities.NetworkAlert': string, 
+  'cities.poorNetworkPerformance':  string, 
+  'cities.has': string, 
+  'cities.have': string 
+
+
+  
 }
 
 const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
@@ -238,7 +255,7 @@ const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
     'cities.critical': 'Crítico',
     
     'settings.title': 'Configurações',
-    'settings.appearance': 'Aparência',
+    'settings.appearance': 'Tema',
     'settings.theme': 'Tema',
     'settings.language': 'Idioma',
     'settings.timezone': 'Fuso Horário',
@@ -282,8 +299,60 @@ const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
     'choose-option-text-add-weather': 'Adicionar Dados Meteorológicos',
     'choose-option-text-part2': 'para coletar novas informações ou',
     'choose-option-text-view-cities': 'Ver Cidades',
-    'choose-option-text-part3': 'para visualizar o dashboard.'
+    'choose-option-text-part3': 'para visualizar o dashboard.', 
+    'loading.city.details': 'A carregar detalhes da cidade...',
+    'error.loading.city': 'Erro ao Carregar Detalhes da Cidade',
+    'try.again.button': 'Tentar Novamente',
+    'detailed.analysis.subtitle': 'Análise detalhada do tempo e da rede',
+    'common.refresh': 'Atualizar',
+    'total.records': 'Total de Registos',
+    'avg.temperature': 'Temperatura Média',
+    'avg.network.power': 'Potência Média da Rede',
+    'avg.altitude': 'Altitude Média',
+    'temperature.analysis': 'Análise de Temperatura',
+    'temperature.range': 'Intervalo',
+    'temperature.trend': 'Tendência',
+    'network.power.distribution': 'Distribuição da Potência da Rede',
+    'monthly.analysis': 'Análise Mensal',
+    'table.month': 'Mês',
+    'table.records': 'Registos',
+    'table.avg.temp': 'Temp Média',
+    'table.avg.network': 'Rede Média',
+    'table.rainy.days': 'Dias Chuvosos',
+    'worst.performance.records': 'Registos de Pior Desempenho da Rede',
+    'temp.label': 'Temp',
+    'altitude.label': 'Altitude',
+    'rain.label': 'Chuva',
+    'recent.records': 'Registos Recentes',
+    'cities.description': 'Monitorize as condições meteorológicas e o desempenho da rede entre cidades',
+    'cities.records': 'registos',
+    'cities.viewDetails': 'Ver Detalhes', 
+    'cities.noCities': 'Nenhuma Cidade Encontrada',
+    'cities.noCitiesDesc': 'Adicione dados meteorológicos para ver cidades aqui',
 
+    'network.alert': 'Alerta de Rede',
+    'network.alert.city.singular': 'cidade tem',
+    'network.alert.city.plural': 'cidades têm',
+    'network.alert.poor.performance': 'desempenho de rede fraco (≤ 2/5)',
+    'network.worst.power': 'Pior potência de rede:',
+    'weather.rainy.days': 'Dias Chuvosos',
+    'cities.totalRecords': 'Registros totais', 
+    'cities.altitude': 'Altitude',
+    'cities.worstPower': 'Pior potência da Rede', 
+    'cities.networkPower': 'Potência da Rede ',
+    'cities.RainyDays': 'Dias chuvosos', 
+    'cities.NetworkAlert': 'Aviso de Redde', 
+    'cities.poorNetworkPerformance': 'Baixa performance da rede',
+    'cities.has': 'tiveram', 
+    'cities.have': 'tem', 
+    'settings.currentLanguage': 'Idioma',
+    'settings.currentTimezone': 'Timezone atual',
+    'settings.temperatureDisplay': 'Temperatura',
+    'settings.currentTheme': 'Tema',
+    'settings.timezoneOffset': 'Timezone',
+    'settings.sampleDate': 'Exemplo da data',
+    'settings.systemInfo': 'Informações do sistema', 
+    'settings.languageRegion': 'Lingagem e Região',
 
   },
   
@@ -362,8 +431,6 @@ const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
     'cities.temperature': 'Temperature',
     'cities.range': 'Range',
     'cities.networkStatus': 'Network Status',
-    'cities.networkPower': 'Network Power',
-    'cities.altitude': 'Altitude',
     'cities.lastUpdate': 'Last Update',
     'cities.timezone': 'Timezone',
     'cities.viewDetails': 'View Details',
@@ -376,6 +443,10 @@ const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
     'cities.average': 'Average',
     'cities.poor': 'Poor',
     'cities.critical': 'Critical',
+
+
+
+    
     
     'settings.title': 'Settings',
     'settings.customize': 'Customize your weather dashboard experience',
@@ -433,7 +504,16 @@ const TRANSLATIONS: Record<string, Partial<TranslationKeys>> = {
     'btn.settings': '⚙️ Settings',
     'btn.settings.active': '✅ Settings',
     'ready.to.start': '🚀 Ready to Start!',
-    'choose.option.text': 'Choose an option above to get started: <strong>Add Weather Data</strong> or <strong>View Cities</strong>.'
+    'choose.option.text': 'Choose an option above to get started: <strong>Add Weather Data</strong> or <strong>View Cities</strong>.',
+    
+    'ready-to-start': '🚀 Ready to start!',
+    'choose-option-text-part1': 'Select an option above to begin:',
+    'choose-option-text-add-weather': 'Add Weather Data',
+    'choose-option-text-part2': 'to gather new information or',
+    'choose-option-text-view-cities': 'See Cities',
+    'choose-option-text-part3': 'to view the dashboard.',
+
+
   }
 };
 

@@ -25,7 +25,8 @@ import { TranslatePipe} from '../../../../shared/pipes/translate.pipe';
   imports: [
     CommonModule, 
     FormsModule, 
-    TranslatePipe,
+    TranslatePipe
+ 
   ],
   templateUrl: './settings-panel.html',
   styleUrls: ['./settings-panel.scss']
@@ -76,6 +77,10 @@ export class SettingsPanel implements OnInit {
   readonly sampleDate = computed(() => {
     return this.settingsService.formatDate(new Date());
   });
+
+  setLocale(locale: string): void {
+  this.i18nService.setLocale(locale);
+}
 
   // Helper methods for template
   getAvailableLanguages() {
@@ -176,9 +181,22 @@ export class SettingsPanel implements OnInit {
     }
   }
 
+// Modificar o método existente onLanguageSelectChange para usar setLocale
   onLanguageSelectChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
-    this.onLanguageChange(target.value);
+    const languageCode = target.value;
+    
+    this.setLocale(languageCode);
+    
+    const languageMap: Record<string, Language> = {
+      'pt': Language.PT,
+      'en': Language.EN,
+    };
+    
+    const language = languageMap[languageCode];
+    if (language) {
+      this.settingsService.updateLanguage(language);
+    }
   }
 
   onTimezoneSelectChange(event: Event): void {
